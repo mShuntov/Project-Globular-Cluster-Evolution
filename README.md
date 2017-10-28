@@ -34,5 +34,13 @@ After this we can build the animation of the evolution on the HR for the whole c
 2) We need to build the plot with the spatial distribution of stars within the globular cluster.
 
 
+**********************************************************************************************************************
+
+4. SOME COMMENTS:
+
+My python codes are scripts and executed in the terminal. We can use jupyter as well.
+
+Download the folder Python Codes and Files to start working on the project, because it contains the needed data files.
+
 
 
