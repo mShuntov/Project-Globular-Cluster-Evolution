@@ -1,0 +1,74 @@
+%pylab
+import matplotlib.animation as animation
+
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+
+M120 = loadtxt('M120.dat')
+M85 = loadtxt('M85.dat')
+M60 = loadtxt('M60.dat')
+M40 = loadtxt('M40.dat')
+M25 = loadtxt('M25.dat')
+M20 = loadtxt('M20.dat')
+M15 = loadtxt('M15.dat')
+M12 = loadtxt('M12.dat')
+M9 = loadtxt('M9.dat')
+M7 = loadtxt('M7.dat')
+M5 = loadtxt('M5.dat')
+M4 = loadtxt('M4.dat')
+M3 = loadtxt('M3.dat')
+M2_5 = loadtxt('M2_5.dat')
+M2 = loadtxt('M2.dat')
+M1_7 = loadtxt('M1_7.dat')
+M1_5 = loadtxt('M1_5.dat')
+M1_25 = loadtxt('M1_25.dat')
+M1 = loadtxt('M1.dat')
+M0_9 = loadtxt('M0_9.dat')
+M0_8 = loadtxt('M0_8.dat')
+
+print(M120[0,0])
+print(M120[2,0])
+print(M120[:,0])
+datasize = size(M120[:,0])
+print('datasize = ', datasize)
+	
+title('HR Diagram for Zo = 0.001')
+#plot(M0_8[:,0], M0_8[:,1],'o-', markersize=4)
+#plot(M1[:,0], M1[:,1],'o-', markersize=4)
+plot(M1_5[:,0], M3[:,1],'x-', markersize=4, label = 'M1_5')
+plot(M3[:,0], M3[:,1],'x-', markersize=4, label = 'M3')
+plot(M7[:,0], M7[:,1],'x-', markersize=4, label = 'M7')
+plot(M15[:,0], M15[:,1],'x-', markersize=4, label = 'M15')
+plot(M25[:,0], M25[:,1],'x-', markersize=4, label = 'M25')
+plot(M85[:,0], M85[:,1],'x-', markersize=4, label = 'M85')
+xlabel('log($T_{eff}$)')
+ylabel('log($L$)')
+legend()
+gca().invert_xaxis()
+
+# it seems that there are some problems in the data vor M0_8 and M1 stars
+# because they have strange positions in the plot
+
+
+# an animation:
+# next we try to build an animation of the evolution of M120 star.
+# it is commented because it does not work..
+
+#fig, ax = plt.subplots()
+#xdata, ydata = [], []
+#ln, = plt.plot([], [], 'ro', animated=True)
+
+#def init():
+#    ax.set_xlim(M120[0,0])
+#    ax.set_ylim(M120[0,1])
+#    return ln,
+
+#def update(frame):
+#    xdata.append(M120[frame,0])
+#    ydata.append(M120[frame,1])
+#    ln.set_data(xdata, ydata)
+#    return ln,
+
+#ani = FuncAnimation(fig, update, frames=arange(0, datasize,1),
+#                    init_func=init, blit=True)
+#plt.show()

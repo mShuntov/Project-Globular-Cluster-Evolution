@@ -1,0 +1,270 @@
+%pylab
+
+
+geneva = open('geneva_data.dat')
+
+NB = []					# (I2)    number of selected point 
+Msun_ini = []			# (F6.2)  Star initial mass 
+Zo = []					# (F5.3)  Star initial metallicity: 0.001 or 0.020
+Age = []				# (D13.6) age in years
+Mass = []				# (F8.4)  actual mass in solar masses
+logL = []				# (F6.3)  log(luminosity) in solar units
+logTe = []				# (F6.3)  log(effective temperature) in K
+X = []					# (F9.6)  H surface abundance (mass fraction)
+Y = [] 					# (F9.6)  He surface abundance (mass fraction)
+
+for line in geneva:
+	NB.append(eval(line.split()[4]))
+	Msun_ini.append(eval(line.split()[0]))
+	Zo.append(eval(line.split()[1]))
+	Age.append(eval(line.split()[5]))
+	Mass.append(eval(line.split()[6]))
+	logL.append(eval(line.split()[7]))
+	logTe.append(eval(line.split()[8]))
+	X.append(eval(line.split()[9]))
+	Y.append(eval(line.split()[10]))
+
+geneva.close()
+
+# this is same data stored in a different way
+data2=open('some_file.dat')
+
+logTe2=[]
+logL2=[]
+
+for line in data2:
+    logTe2.append(eval(line.split()[2]))
+    logL2.append(eval(line.split()[1]))
+
+data2.close()
+
+
+
+datasize = size(NB)
+print('data size = ', datasize)
+
+print('logTe min = ', min(logTe))
+print('no of value for lofTe min =', argmin(logTe))
+print('logTe max = ', max(logTe))
+
+
+# We have data for star of initial masses:
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+# for metalicities 0.020 and 0.001
+
+#  because of the metalicities,we can also distinguish 
+# two different evolution paths
+# for each stars of same initial mass.
+# we will use the 0.001 metalicities.
+
+# now we write in separate files the logTe and logL for each initial mass
+
+output = open('M120.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 120 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M85.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 85 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M60.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 60 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M40.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 40 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M25.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 25 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')		
+output.close()
+
+
+output = open('M20.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 20 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M15.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 15 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M12.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 12 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')		
+output.close()
+
+
+output = open('M9.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 9 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')		
+output.close()
+
+
+output = open('M7.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 7 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M5.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 5 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M4.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 4 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')		
+output.close()
+
+output = open('M3.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 3 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M2_5.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 2.5 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')		
+output.close()
+
+output = open('M2.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 2 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M1_7.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 1.7 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M1_5.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 1.5 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')		
+output.close()
+#1.25, 1, 0.90, 0.80 
+
+output = open('M1_25.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 1.25 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M1.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 1 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')
+output.close()
+
+
+output = open('M0_9.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 0.9 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')		
+output.close()
+
+
+output = open('M0_8.dat', 'w')
+for i in range(0, datasize):
+	if Msun_ini[i] == 0.8 and Zo[i] == 0.001:
+		output.write('{:6.3f} {:6.3f} {:13.6e}'.format(logTe[i], logL[i], Age[i]))
+		output.write('\n')		
+output.close()
+
+
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+
+M120 = loadtxt('M120.dat')
+M85 = loadtxt('M85.dat')
+M60 = loadtxt('M60.dat')
+M40 = loadtxt('M40.dat')
+M25 = loadtxt('M25.dat')
+M20 = loadtxt('M20.dat')
+M15 = loadtxt('M15.dat')
+M12 = loadtxt('M12.dat')
+M9 = loadtxt('M9.dat')
+M7 = loadtxt('M7.dat')
+M5 = loadtxt('M5.dat')
+M4 = loadtxt('M4.dat')
+M3 = loadtxt('M3.dat')
+M2_5 = loadtxt('M2_5.dat')
+M2 = loadtxt('M2.dat')
+M1_7 = loadtxt('M1_7.dat')
+M1_5 = loadtxt('M1_5.dat')
+M1_25 = loadtxt('M1_25.dat')
+M1 = loadtxt('M1.dat')
+M0_9 = loadtxt('M0_9.dat')
+M0_8 = loadtxt('M0_8.dat')
+
+
+#print(M120[:,0])
+	
+#title('Evolution')
+#plot(M0_8[:,0], M120[:,1],'o-', markersize=4)
+#plot(M1[:,0], M2_5[:,1],'o-', markersize=4)
+#plot(M3[:,0], M2[:,1],'o-', markersize=4)
+#plot(M7[:,0], M2[:,1],'o-', markersize=4)
+#plot(M15[:,0], M2[:,1],'o-', markersize=4)
+#plot(M25[:,0], M2[:,1],'o-', markersize=4)
+#plot(M85[:,0], M2[:,1],'o-', markersize=4)
+#xlabel('log($T_{eff}$)')
+#ylabel('log($L$)')
+#gca().invert_xaxis()
+
+
+

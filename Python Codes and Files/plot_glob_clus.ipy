@@ -1,0 +1,46 @@
+%pylab
+from numpy import random
+from mpl_toolkits.mplot3d import Axes3D
+
+
+
+#from scipy.stats import rv_continuous
+#class gaussian_gen(rv_continuous):
+#    "Gaussian distribution"
+#    def _pdf(self, x):
+#        return np.exp(-x**2 / 2.) / np.sqrt(2.0 * np.pi)
+#gaussian = gaussian_gen(name='gaussian')
+
+#print(gaussian)
+
+#x = rv_continuous(momtype = 0)
+#print(x)
+
+
+
+N = 2500                    #Number of stars
+
+x1 = randn(1,N) * 5  #pc
+y1 = randn(1,N) * 5  #pc
+z1 = randn(1,N) * 5  #pc
+
+ss=17*rand(1,10)                  #we can make the size change according to a function 
+                                  #in this case a random distribution
+                                  #we have to make this according to the IMF
+c1=rand(1,N)
+        
+        
+fig = figure()
+ax = fig.add_subplot(111, projection='3d')
+
+ax.scatter(x1,y1,z1, c='r', marker='o', s=5,cmap='Spectral')
+
+#ax.scatter(x1,y1,z1, marker='o')
+ax.set_xlabel('X [$pc$]')
+ax.set_ylabel('Y [$pc$]')
+ax.set_zlabel('Z [$pc$]')
+#ax.axis('True')
+
+
+
+plt.show()
