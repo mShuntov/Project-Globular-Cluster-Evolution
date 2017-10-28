@@ -26,19 +26,6 @@ for line in geneva:
 
 geneva.close()
 
-# this is same data stored in a different way
-data2=open('some_file.dat')
-
-logTe2=[]
-logL2=[]
-
-for line in data2:
-    logTe2.append(eval(line.split()[2]))
-    logL2.append(eval(line.split()[1]))
-
-data2.close()
-
-
 
 datasize = size(NB)
 print('data size = ', datasize)
