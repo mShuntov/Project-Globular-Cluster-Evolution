@@ -2,38 +2,172 @@
 from numpy import random
 from mpl_toolkits.mplot3d import Axes3D
 
+# open the file containing the stellar population according to the IMF:
+%run imf.ipy 
+
+# now we build our globular cluster with the numbers of stars with a certain masses according to the IMF
+# we do that by building random points whose number corresponds to the IMF numbers.
+# that means that we build dN* points for every stellar mass M*
+
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+# 21 masses in total
+
+numbmass = 21
+
+x120 = randn(1, int(1/7 * dN120)) * 5  #pc
+y120 = randn(1, int(1/7 * dN120)) * 5  #pc
+z120 = randn(1, int(1/7 * dN120)) * 5  #pc
+
+x85 = randn(1, int(1/7 * dN85)) * 5  #pc
+y85 = randn(1, int(1/7 * dN85)) * 5  #pc
+z85 = randn(1, int(1/7 * dN85)) * 5  #pc
+
+x60 = randn(1, int(1/7 * dN60)) * 5  #pc
+y60 = randn(1, int(1/7 * dN60)) * 5  #pc
+z60 = randn(1, int(1/7 * dN60)) * 5  #pc
+
+x40 = randn(1, int(1/7 * dN40)) * 5  #pc
+y40 = randn(1, int(1/7 * dN40)) * 5  #pc
+z40 = randn(1, int(1/7 * dN40)) * 5  #pc
+
+x25 = randn(1, int(1/7 * dN25)) * 5  #pc
+y25 = randn(1, int(1/7 * dN25)) * 5  #pc
+z25 = randn(1, int(1/7 * dN25)) * 5  #pc
+
+x20 = randn(1, int(1/7 * dN20)) * 5  #pc
+y20 = randn(1, int(1/7 * dN20)) * 5  #pc
+z20 = randn(1, int(1/7 * dN20)) * 5  #pc
+
+x15 = randn(1, int(1/7 * dN15)) * 5  #pc
+y15 = randn(1, int(1/7 * dN15)) * 5  #pc
+z15 = randn(1, int(1/7 * dN15)) * 5  #pc
+
+x12 = randn(1, int(1/7 * dN12)) * 5  #pc
+y12 = randn(1, int(1/7 * dN12)) * 5  #pc
+z12 = randn(1, int(1/7 * dN12)) * 5  #pc
+
+x9 = randn(1, int(1/7 * dN9)) * 5  #pc
+y9 = randn(1, int(1/7 * dN9)) * 5  #pc
+z9 = randn(1, int(1/7 * dN9)) * 5  #pc
+
+x7 = randn(1, int(1/7 * dN7)) * 5  #pc
+y7 = randn(1, int(1/7 * dN7)) * 5  #pc
+z7 = randn(1, int(1/7 * dN7)) * 5  #pc
+
+x5 = randn(1, int(1/7 * dN5)) * 5  #pc
+y5 = randn(1, int(1/7 * dN5)) * 5  #pc
+z5 = randn(1, int(1/7 * dN5)) * 5  #pc
+
+x4 = randn(1, int(1/7 * dN4)) * 5  #pc
+y4 = randn(1, int(1/7 * dN4)) * 5  #pc
+z4 = randn(1, int(1/7 * dN4)) * 5  #pc
 
 
-#from scipy.stats import rv_continuous
-#class gaussian_gen(rv_continuous):
-#    "Gaussian distribution"
-#    def _pdf(self, x):
-#        return np.exp(-x**2 / 2.) / np.sqrt(2.0 * np.pi)
-#gaussian = gaussian_gen(name='gaussian')
+x3 = randn(1, int(1/7 * dN3)) * 5  #pc
+y3 = randn(1, int(1/7 * dN3)) * 5  #pc
+z3 = randn(1, int(1/7 * dN3)) * 5  #pc
 
-#print(gaussian)
+x2_5 = randn(1, int(1/7 * dN2_5)) * 5  #pc
+y2_5 = randn(1, int(1/7 * dN2_5)) * 5  #pc
+z2_5 = randn(1, int(1/7 * dN2_5)) * 5  #pc
 
-#x = rv_continuous(momtype = 0)
-#print(x)
+x2 = randn(1, int(1/7 * dN2)) * 5  #pc
+y2 = randn(1, int(1/7 * dN2)) * 5  #pc
+z2 = randn(1, int(1/7 * dN2)) * 5  #pc
+
+x1_7 = randn(1, int(1/7 * dN1_7)) * 5  #pc
+y1_7 = randn(1, int(1/7 * dN1_7)) * 5  #pc
+z1_7 = randn(1, int(1/7 * dN1_7)) * 5  #pc
+
+x1_5 = randn(1, int(1/7 * dN1_5)) * 5  #pc
+y1_5 = randn(1, int(1/7 * dN1_5)) * 5  #pc
+z1_5 = randn(1, int(1/7 * dN1_5)) * 5  #pc
+
+x1_25 = randn(1, int(1/7 * dN1_25)) * 5  #pc
+y1_25 = randn(1, int(1/7 * dN1_25)) * 5  #pc
+z1_25 = randn(1, int(1/7 * dN1_25)) * 5  #pc
+
+x1 = randn(1, int(1/7 * dN1)) * 5  #pc
+y1 = randn(1, int(1/7 * dN1)) * 5  #pc
+z1 = randn(1, int(1/7 * dN1)) * 5  #pc
+
+x0_9 = randn(1, int(1/7 * dN0_9)) * 5  #pc
+y0_9 = randn(1, int(1/7 * dN0_9)) * 5  #pc
+z0_9 = randn(1, int(1/7 * dN0_9)) * 5  #pc
+
+x0_8 = randn(1, int(1/7 * dN0_8)) * 5  #pc
+y0_8 = randn(1, int(1/7 * dN0_8)) * 5  #pc
+z0_8 = randn(1, int(1/7 * dN0_8)) * 5  #pc
+
+# we could have worked with arrays to make things shorter.
+# and we could enter all the coordinates into arrays to be easier and shorter to plot
+# but we will do it the "longer way"...
 
 
+# we will now correlate the size of the points (stars) with their masses.
+ss = 1 * arange(1, numbmass, 1)                  
 
-N = 2500                    #Number of stars
+#[ 0.    0.05  0.1   0.15  0.2   0.25  0.3   0.35  0.4   0.45  0.5   0.55
+#  0.6   0.65  0.7   0.75  0.8   0.85  0.9   0.95  1.  ]
 
-x1 = randn(1,N) * 5  #pc
-y1 = randn(1,N) * 5  #pc
-z1 = randn(1,N) * 5  #pc
-
-ss=17*rand(1,10)                  #we can make the size change according to a function 
-                                  #in this case a random distribution
-                                  #we have to make this according to the IMF
-c1=rand(1,N)
+c120 = 0.0
+c85 = 0.05
+c60 = 0.1
+c40 = 0.15
+c25 = 0.2
+c20 = 0.25
+c15 = 0.3
+c12 = 0.35
+c9 = 0.40
+c7 = 0.45
+c5 = 0.50
+c4 = 0.55
+c3 = 0.60
+c2_5 =0.65
+c2 = 0.70
+c1_7 = 0.75
+c1_5 = 0.80
+c1_25 = 0.85
+c1 = 0.90
+c0_9 = 0.95
+c0_8 = 1
         
+print('size = ', ss)
+print('color = ', c1)
+print('dN120 = ', (dN120))
+print('dN60 = ', (dN60))
+print('dN12 = ', (dN12))
+print('dN1 = ', (dN1))
+print('x120', x120)
+
+
+# next, we are do the plot:
         
 fig = figure()
 ax = fig.add_subplot(111, projection='3d')
 
-ax.scatter(x1,y1,z1, c='r', marker='o', s=5,cmap='Spectral')
+ax.scatter(x120,y120,z120, c='b', marker='o', s=ss[19] ,cmap='Spectral')
+ax.scatter(x85,y85,z85, c='b', marker='o', s=ss[18] ,cmap='Spectral')
+ax.scatter(x60,y60,z60, c='b', marker='o', s=ss[17] ,cmap='Spectral')
+ax.scatter(x40,y40,z40, c='b', marker='o', s=ss[16] ,cmap='Spectral')
+ax.scatter(x25,y25,z25, c='b', marker='o', s=ss[15] ,cmap='Spectral')
+ax.scatter(x20,y20,z20, c='g', marker='o', s=ss[14] ,cmap='Spectral')
+ax.scatter(x15,y15,z15, c='g', marker='o', s=ss[13] ,cmap='Spectral')
+ax.scatter(x12,y12,z12, c='g', marker='o', s=ss[12] ,cmap='Spectral')
+ax.scatter(x9,y9,z9, c='g', marker='o', s=ss[11] ,cmap='Spectral')
+ax.scatter(x7,y7,z7, c='g', marker='o', s=ss[10] ,cmap='Spectral')
+ax.scatter(x5,y5,z5, c='g', marker='o', s=ss[9] ,cmap='Spectral')
+ax.scatter(x4,y4,z4, c='g', marker='o', s=ss[8] ,cmap='Spectral')
+ax.scatter(x3,y3,z3, c='g', marker='o', s=ss[7] ,cmap='Spectral')
+ax.scatter(x2_5,y2_5,z2_5, c='r', marker='o', s=ss[6] ,cmap='Spectral')
+ax.scatter(x2,y2,z2, c='r', marker='o', s=ss[5] ,cmap='Spectral')
+ax.scatter(x1_7,y1_7,z1_7, c='r', marker='o', s=ss[4] ,cmap='Spectral')
+ax.scatter(x1_5,y1_5,z1_5, c='r', marker='o', s=ss[3] ,cmap='Spectral')
+ax.scatter(x1_25,y1_25,z1_25, c='r', marker='o', s=ss[2] ,cmap='Spectral')
+ax.scatter(x1,y1,z1, c='r', marker='o', s=ss[1] ,cmap='Spectral')
+ax.scatter(x0_9,y0_9,z0_9, c='r', marker='o', s=ss[0] ,cmap='Spectral')
+ax.scatter(x0_8,y0_8,z0_8, c='r', marker='o', s=ss[0] ,cmap='Spectral')
 
 #ax.scatter(x1,y1,z1, marker='o')
 ax.set_xlabel('X [$pc$]')

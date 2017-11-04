@@ -1,0 +1,84 @@
+%pylab
+
+# we need to construct a globular cluster stellar population
+# according to the initial mass function.
+
+# the number of stars dN with with masses in the interval dM is:
+# dN = F(M) * dM
+
+# F(M) is the initial mass function, for which we use the Salpeter IMF that is:
+# F(M) = F0 * M^{-2,35}              where F0 = 0.060
+
+# we define now the IMF:
+
+def IMF(M):
+	return 0.060 * M**(-2.35)
+
+# We have data for star of initial masses:
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+# We will use these masses to get the number of stars with these masses.
+# we will use a mass intervals dMh = 10 for the stars of higher masses (120, 85, 60, 40)
+# dMm1 = 2 for the stars of middle mass (25, 20, 15); dMm2 = 1 for masses (12, 9, 7, 5, 4)
+# dMl1 = 0.3 for stars of low mass (3, 2.5, 2); dMl2 = 0.1 for masses (1.7, 1.5, 1.25, 1, 0.9, 0.8)
+# however, using these values will give for the dN* values in the order from e-6 to e-2, which 
+# we cant work with to do a plotting, so we scale the values by multiplying them
+# with a scaling factor of 10^{6}
+
+
+M120 = 120
+M85 = 85
+M60 = 60
+M40 = 40
+M25 = 25
+M20 = 20
+M15 = 15
+M12 = 12
+M9 = 9
+M7 = 7
+M5 = 5
+M4 = 4
+M3 = 3
+M2_5 = 2.5
+M2 = 2
+M1_7 = 1.7
+M1_5 = 1.5
+M1_25 = 1.25
+M1 = 1
+M0_9 = 0.9
+M0_8 = 0.8
+
+dMh = 10 * 1.0e6					# we put the scaling factor here
+dMm1 = 2 * 1.0e6
+dMm2 = 1 * 1.0e6
+dMl1 = 0.3 * 1.0e6
+dMl2 = 0.1 * 1.0e6
+
+# Now we construct the globular cluster stellar population.
+# With the IMF we compute dN for the stellar masses we have:
+
+dN120 = IMF(M120) * dMh
+dN85 = IMF(M85) * dMh
+dN60 = IMF(M60) * dMh
+dN40 = IMF(M40) * dMh
+dN25 = IMF(M25) * dMm1
+dN20 = IMF(M20) * dMm1
+dN15 = IMF(M15) * dMm1
+dN12 = IMF(M12) * dMm2
+dN9 = IMF(M9) * dMm2
+dN7 = IMF(M7) * dMm2
+dN5 = IMF(M5) * dMm2
+dN4 = IMF(M4) * dMm2
+dN3 = IMF(M3) * dMl1
+dN2_5 = IMF(M2_5) * dMl1
+dN2 = IMF(M2) * dMl1
+dN1_7 = IMF(M1_7) * dMl2
+dN1_5 = IMF(M1_5) * dMl2
+dN1_25 = IMF(M1_25) * dMl2
+dN1 = IMF(M1) * dMl2
+dN0_9 = IMF(M0_9) * dMl2
+dN0_8 = IMF(M0_8) * dMl2
+
+
+
+
