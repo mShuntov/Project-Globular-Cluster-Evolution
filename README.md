@@ -21,7 +21,10 @@ In the plot_glob_clust.ipy the code for creating a plot of the globular cluster 
 
 So far we have managed to download all the needed data for the stellar evolution and managed to do the evolution plots in the HR diagram.
 
-
+04.11.2017 (Marko):
+- The Initial Mass Function has been utilized to compute the numbers of stars dN for each M within a given mass interval dM.
+This is done in the file imf.ipy
+- The file plot_glob_clust.ipy has been updated and now the plot contains the correct distribution of number of stars per certain mass based on the calculations of dN in the file imf.ipy 
 
 ***********************************************************************************************************************
 
@@ -32,6 +35,7 @@ First, we can build an animation of the evolution of single star with respect to
 After this we can build the animation of the evolution on the HR for the whole cluster.
 
 2) We need to build the plot with the spatial distribution of stars within the globular cluster.
+  - we need to figure out how to do the colors.
 
 
 **********************************************************************************************************************
