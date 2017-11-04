@@ -24,7 +24,7 @@ So far we have managed to download all the needed data for the stellar evolution
 04.11.2017 (Marko):
 - The Initial Mass Function has been utilized to compute the numbers of stars dN for each M within a given mass interval dM.
 This is done in the file imf.ipy
-- The file plot_glob_clust.ipy has been updated and now the plot contains the correct distribution of number of stars per certain mass based on the calculations of dN in the file imf.ipy 
+- The file plot_glob_clust.ipy has been updated and now the plot contains the correct distribution of number of stars per certain mass based on the calculations of dN in the file imf.ipy and the size of the stars corresponds to their mass. 
 
 ***********************************************************************************************************************
 
