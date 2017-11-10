@@ -7,6 +7,7 @@ TABLE OF CONTENTS
 3. WORK TO BE DONE
 4. GENEVA MODELS
 
+************************************************************************************************************************
 
 1. DESCRIPTION OF THE FOLDER:
 
