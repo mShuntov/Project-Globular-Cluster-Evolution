@@ -57,18 +57,25 @@ After this we can build the animation of the evolution on the HR for the whole c
 4. GENEVA MODELS
 
 The data that we need in order to simulate the evolution of the stars we get from the Geneva research group. (suggested in professor's lecture). The Geneva's group webpage is
+
 https://obswww.unige.ch/Recherche/evol/
 
 In the following link:
+
 https://obswww.unige.ch/Recherche/evol/Geneva-grids-of-stellar-evolution
+
 we can find the evolution grids that contain all of the data for the evolution of the stars. We need to download our data from here.
 In his lectures the professor said to use the Schaller 1992 models. So we open the file with the name:
 I	0.001	0.756	0.243	standard	Schaller et al. 1992	
 by clicking on the I and we get this web page:
+
 http://cdsarc.u-strasbg.fr/cgi-bin/myqcat3?J/A+AS/96/269
+
 this page contains some explanation about the data.
 In order to download what we need we open the tab named VizieR and we go to this web page:
+
 http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=J%2FA%2BAS%2F96%2F269
+
 on this web page we select the columns from the data that we want and we download the data by clicking on the submit (we can play with the preferences (a tab on the left side) in order to get the table of the data in different formats).
 
 
@@ -83,7 +90,7 @@ on this web page we select the columns from the data that we want and we downloa
 
 
 
-
+********************************************************************************************************************
 
 
 
