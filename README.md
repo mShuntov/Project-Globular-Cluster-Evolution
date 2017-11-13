@@ -46,6 +46,12 @@ After this we can build the animation of the evolution on the HR for the whole c
   - we need to figure out how to do the colors.
 
 
+
+3) ABOUT THE ANIMATION PLOT (FILE Evolution_of_stars_on_HRD.ipynb)
+  - When we add several stars of different masses on the evolution plot, we see that they move together with the same time step, but when we look at the age, we see that the age goes differently for different mass stars.
+  The behavior is such because we are plotting the points and make the animation plot the successive evolution points for each star not taking care of their age.
+  We somehow need to make the animation run with respect to time, and have same and accurate time representation for all star masses.
+
 **********************************************************************************************************************
 
 4. GENEVA MODELS
