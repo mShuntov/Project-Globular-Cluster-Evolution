@@ -1,0 +1,134 @@
+
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.animation as animation
+
+#pause = True
+#def onClick(event):
+#    global pause
+#    pause ^= True
+
+# we run the code for the imf in order to get the values for
+# number of stars with certain mass which we should use for the size.
+
+%run imf_distr.ipy
+#%run spatial_distribution.ipy
+
+
+# We reset the main parameters of the plot
+def update_plot(i, color, size, elev, azim, dist, scat):
+    global pause
+    # Set colors...
+    scat.set_array(color[i])
+    # Set sizes...
+    scat.set_sizes(size[i])
+    # Set elevation annd azimuth...
+    ax.view_init(elev=elev[i], azim=azim[i])
+    # Set distance...
+    ax.dist=dist[i]
+
+    return scat,
+
+
+#import IPython; IPython.embed()
+# How many frame?
+numframes = 50
+# How many points?
+numpoints = 2000
+
+# Initialization the position (x, y, z), the color (c) and the size (s) of the points
+mu, sigma = 0, 0.25 # mean and standard deviation
+x = np.random.normal(mu, sigma, numpoints)
+y = np.random.normal(mu, sigma, numpoints)
+z = np.random.normal(mu, sigma, numpoints)
+
+#x = vx1[:numpoints]
+#y = vy1[:numpoints]
+#z = vz1[:numpoints]
+
+
+c = linspace(0, 10, numpoints)
+#c[:] = v[:numpoints]
+s[:] = v[0]
+#c = np.random.random((1, numpoints))
+#s = np.random.random((1, numpoints))
+#c = np.linspace(0, 1, numpoints)
+#s = np.linspace(0, 1, numpoints)
+
+
+# Definition of the data for the new values for each new plot
+# for the size we enter the imf:
+# so for the size, we have one value that is being given to the star
+# and one value for each frame for that stars that when the frames go
+# the value changes and the size changes with frames.
+
+# so in our case, we use the imf to define the mass distribution of stars
+# and we also enter (under numframes) how the size of the star changes with time.
+
+#the following part is just for testing
+# but here is where we change the size
+
+#ve = 20*ones((numframes, numpoints))
+#for i in range(1, numframes):
+#  for j in range(0, numpoints):
+#    ve[0,j] = v[j]
+#    ve[i,j] = 10*v[j]
+
+
+#size_data = 200*np.random.random((numframes, numpoints))
+#size_data = 100 * v[:numpoints]
+sizframes = np.linspace(0, 100, numframes)
+size_data = zeros((numframes, numpoints))
+color_data = zeros((numframes, numpoints))
+ccolor = linspace(0, 10, numframes)
+for i in range(0, numframes):
+  for j in range(0, numpoints):
+    color_data[i,j] = ccolor[i]
+    size_data[i,j] = 4 * v[j] #sizframes[i] #v[j]
+
+#size_data = ve
+
+#color_data = np.random.random((numframes, numpoints))
+
+elev_data = np.linspace(0, 360, numframes)
+azim_data = np.linspace(0, 360, numframes)
+dist_data = np.linspace(20, 1, numframes)
+#elev_data = np.linspace(0, 1, numframes)
+#azim_data = np.linspace(0, 1, numframes)
+#dist_data = np.linspace(10, 10, numframes)
+
+
+print('sizframes', size(sizframes))
+print('v[:numpoints]', size(v[:numpoints]))
+print('size_data',size(size_data))
+print('color_data', size(color_data))
+print(size_data)
+print('color_data',color_data)
+#print(color_data)
+
+fig = plt.figure()
+ax = Axes3D(fig,  axisbg='black')
+#ax = Axes3D(fig)
+
+# We do not want the axis
+ax.set_axis_off()
+
+# This is where we plot the cluster
+scat = ax.scatter(x, y, z, c=c, s=s, alpha=1, edgecolors='none', cmap = 'jet_r')
+xmin = np.min(x)
+xmax = np.max(x)
+ax.set_xlim(xmin,xmax)
+ax.set_ylim(xmin,xmax)
+ax.set_zlim(xmin,xmax)
+
+# This is the animation. In fargs, we provide the data for each new plot.
+#time_text = ax.text(0.05, 0.95,'',horizontalalignment='left',verticalalignment='top', transform=ax.transAxes)
+#fig.canvas.mpl_connect('button_press_event', onClick)
+ani = animation.FuncAnimation(fig, update_plot, frames=range(numframes),
+                                  fargs=(color_data, size_data, 
+                                  elev_data, azim_data, dist_data,
+                                  scat), blit=False, interval=10, repeat=True)
+
+
+plt.show()
