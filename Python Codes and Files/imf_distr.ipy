@@ -1,0 +1,25 @@
+%pylab
+
+#define the imf:
+
+def IMF(M):
+	return 0.060 * M**(-2.35)
+
+# the limits of the masses
+M_min = 0.1
+M_max = 130.
+
+N_pts = 1000000
+
+h = 0.2
+u1 = np.random.uniform(low = M_min, high = M_max, size = (N_pts, ))
+u2 = np.random.uniform(low = 0., high = 1., size = (N_pts, ))
+
+# condition to accept the points: when the y-values are below the curve
+idx = np.where(u2 <= IMF(u1)/h)[0]   # acception criteria 
+v = u1[idx]
+
+#print(v)
+print(size(v))
+
+# v should serve as the size in our 3d cluster plot...

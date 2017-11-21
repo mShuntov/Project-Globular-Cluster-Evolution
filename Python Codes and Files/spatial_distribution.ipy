@@ -1,0 +1,135 @@
+%pylab
+from numpy import random
+from mpl_toolkits.mplot3d import Axes3D
+
+
+# first we define our distribution function which is 
+# the Schuster density law
+
+def schust(r, c, s, m):
+	schust = c * (1 + r**2/s**2)**(-m)
+	return schust
+
+# Where C is the normalization constant, 
+# s is the size parameter and m is related to
+# the observed slope of the star density profile. 
+
+# for the values of c, s and m we use values defined in 
+# the TABLE 3 of the paper :
+# http://dlibra.umcs.lublin.pl/Content/21054/czas16364_69_2014_1.pdf
+
+
+c = 0.16
+m = 2
+s = 10.01     # in pc
+s1 = 25       # in arcsec
+
+
+# now we make a plot for the distribution function to see it
+r1 = xd = np.arange(-25,25,0.1)
+fdist = schust(r1, c, s, m)
+#plot(r1, fdist, label = 'Schuster Density Law')
+#xlabel('$r$ [pc]')
+#ylabel('Probability')
+#legend()
+
+
+# now we make the EXPLAIN WHAT
+
+N = 1000000              # number of stars
+
+h = 0.2
+r2 = 40     # this is the size of the cluster
+u1 = np.random.uniform(low=-r2, high=r2, size=(N, )) # uniform random samples
+u2 = np.random.uniform(low=0, high=1, size=(N, )) # uniform random samples
+#u2 = np.random.rand(N) 
+# When do we reject the points? When the y-values are above the function
+idx = where(u2 <= schust(u1, c, s, m)/h)[0]    # acceptation criterion
+v = u1[idx]
+
+# we dont need to show all the plots so we comment them
+
+# we plot the histogram
+#fig,ax=subplots()
+#plt.hold(True)
+#ax.hist(v,normed=1,bins=40,alpha=.3)
+#ax.plot(r1,fdist,'r',lw=3.,label='Schusher law')
+#ax.legend()
+#plt.savefig('prob2FuncHist.png')
+#plt.show()
+
+# We plot the "good" points in green and the "bad" points in red.
+#fig,ax=plt.subplots()
+#ax.plot(u1, u2, 'r.', label='rejected', alpha=.3)
+#ax.plot(u1[idx], u2[idx], 'g.', label='accepted', alpha=.3)
+#ax.legend()
+# And maybe, we save the plot
+#plt.show()
+
+
+# so ok, from the plots we can see that this method works fine 
+# for sampling random points from a distribution function.
+
+# next we need to do that for our globular cluster.
+
+x1 = np.random.uniform(low=-r2, high=r2, size=(N, ))
+y1 = np.random.uniform(low=-r2, high=r2, size=(N, ))
+z1 = np.random.uniform(low=-r2, high=r2, size=(N, ))
+
+idxx = where(u2 <= schust(x1, c, s, m)/h)[0]    # acceptation criterion
+idxy = where(u2 <= schust(y1, c, s, m)/h)[0]    # acceptation criterion
+idxz = where(u2 <= schust(z1, c, s, m)/h)[0]    # acceptation criterion
+
+
+#fig,ax=subplots()
+#plt.hold(True)
+#ax.hist(x1[idxx],normed=1,bins=40, color ='b', histtype = 'step', label = 'x points')
+#ax.hist(y1[idxy],normed=1,bins=40, color ='r', histtype = 'step', label = 'y points')
+#ax.hist(z1[idxz],normed=1,bins=40, color ='g', histtype = 'step', label = 'z points')
+#ax.plot(r1,fdist,'r',lw=3.,label='Schusher law')
+#ax.legend()
+#plt.savefig('prob2FuncHist.png')
+#plt.show()
+
+sx1 = size(x1[idxx])
+sy1 = size(y1[idxy])
+print('size x1[idxx]', sx1)
+print('size y1[idxy]', sy1)
+
+vx1 = x1[idxx]
+vy1 = y1[idxy]
+vz1 = z1[idxz]
+
+subplots()
+fig,ax=plt.subplots()
+#ax = fig.add_subplot(111, projection='3d')
+ax.scatter(vx1[:1000], vy1[:1000], c='r', marker='o', alpha=.3)
+#ax.scatter(x1, y1, c='b', marker='o', alpha=.3)
+#ax.scatter(x1,y1,z1, marker='o')
+ax.set_xlabel('X [$pc$]')
+#ax.set_ylabel('Y [$pc$]')
+#ax.set_zlabel('Z [$pc$]')
+#ax.axis('True')
+
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(vx1[:1000],vy1[:1000],vz1[:1000], c='r', marker='o')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
