@@ -1,0 +1,127 @@
+%pylab
+import os  
+import glob
+
+#import matplotlib.animation as animation
+
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+
+# also,load the geneva data:
+
+geneva = open('newgeneva_data.dat')
+
+
+
+NB = []					# (I2)    number of selected point 
+Msun_ini = []			# (F6.2)  Star initial mass 
+Zo = []					# (F5.3)  Star initial metallicity: 0.001 or 0.020
+Age = []				# (D13.6) age in years
+Mass = []				# (F8.4)  actual mass in solar masses
+logL = []				# (F6.3)  log(luminosity) in solar units
+logTe = []				# (F6.3)  log(effective temperature) in K
+X = []					# (F9.6)  H surface abundance (mass fraction)
+Y = [] 					# (F9.6)  He surface abundance (mass fraction)
+
+for line in geneva:
+	NB.append(eval(line.split()[4]))
+	Msun_ini.append(eval(line.split()[0]))
+	Zo.append(eval(line.split()[1]))
+	Age.append(eval(line.split()[5]))
+	Mass.append(eval(line.split()[6]))
+	logL.append(eval(line.split()[7]))
+	logTe.append(eval(line.split()[8]))
+	X.append(eval(line.split()[9]))
+	Y.append(eval(line.split()[10]))
+
+geneva.close()
+
+M120 = loadtxt('M120.dat')
+M85 = loadtxt('M85.dat')
+M60 = loadtxt('M60.dat')
+M40 = loadtxt('M40.dat')
+M25 = loadtxt('M25.dat')
+M20 = loadtxt('M20.dat')
+M15 = loadtxt('M15.dat')
+M12 = loadtxt('M12.dat')
+M9 = loadtxt('M9.dat')
+M7 = loadtxt('M7.dat')
+M5 = loadtxt('M5.dat')
+M4 = loadtxt('M4.dat')
+M3 = loadtxt('M3.dat')
+M2_5 = loadtxt('M2_5.dat')
+M2 = loadtxt('M2.dat')
+M1_7 = loadtxt('M1_7.dat')
+M1_5 = loadtxt('M1_5.dat')
+M1_25 = loadtxt('M1_25.dat')
+M1 = loadtxt('M1.dat')
+M0_9 = loadtxt('M0_9.dat')
+M0_8 = loadtxt('M0_8.dat')
+
+print(M120[0,0])
+print(M120[2,0])
+print(M120[:,0])
+datasize = size(M120[:,0])
+print('datasize = ', datasize)
+
+
+#subplots()	
+#title('HR Diagram for Zo = 0.001')
+#plot(M0_8[:,2], M0_8[:,0],'o-', markersize=4)
+#plot(M1[:,2], M1[:,0],'o-', markersize=4)
+#plot(M1_5[:,2], M1_5[:,0],'x-', markersize=4, label = '$M_{ini} = $1.5')
+#plot(M3[:,2], M3[:,0],'x-', markersize=4, label = '$M_{ini} = $3')
+#plot(M7[:,2], M7[:,0],'x-', markersize=4, label = '$M_{ini} = $7')
+#plot(M15[:,2], M15[:,0],'x-', markersize=4, label = '$M_{ini} = $15')
+#plot(M25[:,2], M25[:,0],'x-', markersize=4, label = '$M_{ini} = $25')
+#plot(M85[:,2], M85[:,0],'x-', markersize=4, label = '$M_{ini} = $85')
+#xlabel('age')
+#ylabel('log($T_{eff}$)')
+#xscale('log')
+#legend()
+#gca().invert_xaxis()
+
+# it seems that there are some problems in the data vor M0_8 and M1 stars
+# because they have strange positions in the plot
+
+
+filepath = "./MM*.dat"
+dat = glob.glob(filepath)
+
+print('dat', dat)
+for file in dat:
+	table = np.genfromtxt(file, dtype=None, unpack=True) 
+	#print('table.shape',table.shape)
+	N_data = table.shape[1]
+	lum = table[0, :]
+	temp = table[1, :]
+	age = table[2, :]
+	
+	plot(age, temp, 'x-')
+
+xscale('log')
+xlabel('age')
+ylabel('log($T_{eff}$)')
+
+age_max = max(Age)
+age_min = min(Age)
+
+print('the max value of age:', age_max)
+print('the min value of age:', age_min)
+print('LOG the max value of age:', log(age_max))
+print('LOG the min value of age:', log(age_min))
+
+
+# max age is 2.6 e+10
+# min age is 5100
+
+
+# NOW WE CREATE THE AGE SAMPLING FOR ALL STARS:
+age_sampling = logspace(log10(age_min), log10(age_max), 500)
+#print(age_sampling)
+
+
+
+
+
+
