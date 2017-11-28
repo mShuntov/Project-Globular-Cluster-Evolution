@@ -1,0 +1,331 @@
+%pylab
+from scipy.interpolate import interp1d
+import os  
+import glob
+
+#import matplotlib.animation as animation
+
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+
+# also,load the geneva data:
+
+M120 = loadtxt('M120.dat')
+M85 = loadtxt('M85.dat')
+M60 = loadtxt('M60.dat')
+M40 = loadtxt('M40.dat')
+M25 = loadtxt('M25.dat')
+M20 = loadtxt('M20.dat')
+M15 = loadtxt('M15.dat')
+M12 = loadtxt('M12.dat')
+M9 = loadtxt('M9.dat')
+M7 = loadtxt('M7.dat')
+M5 = loadtxt('M5.dat')
+M4 = loadtxt('M4.dat')
+M3 = loadtxt('M3.dat')
+M2_5 = loadtxt('M2_5.dat')
+M2 = loadtxt('M2.dat')
+M1_7 = loadtxt('M1_7.dat')
+M1_5 = loadtxt('M1_5.dat')
+M1_25 = loadtxt('M1_25.dat')
+M1 = loadtxt('M1.dat')
+M0_9 = loadtxt('M0_9.dat')
+M0_8 = loadtxt('M0_8.dat')
+
+MM60 = loadtxt('0M60.dat')
+MM20 = loadtxt('0M20.dat')
+MM15 = loadtxt('0M15.dat')
+MM3 = loadtxt('0M3.dat')
+
+
+
+#print(M120[0,0])
+#print(M120[2,0])
+#print(M120[:,0])
+datasize = size(M120[:,0])
+print('datasize = ', datasize)
+
+
+
+filepath = "./M*.dat"
+dat = glob.glob(filepath)
+
+print('dat', dat)
+for file in dat:
+	table = np.genfromtxt(file, dtype=None, unpack=True) 
+	#print('table.shape',table.shape)
+	N_data = table.shape[1]
+	temp = table[0, :]
+	lum = table[1, :]
+	age = table[2, :]
+
+	ftemp = interp1d(age, temp)
+	flum = interp1d(age, lum)
+	
+	plot(age, lum, 'x-')
+
+xscale('log')
+xlabel('age')
+ylabel('log($T_{eff}$)')
+
+age_max = max(age)
+age_min = min(age)
+
+print('the max value of age:', age_max)
+print('the min value of age:', age_min)
+print('LOG the max value of age:', log(age_max))
+print('LOG the min value of age:', log(age_min))
+
+
+age_max = 1.6e+10
+age_min = 5100	
+
+# max age is 1.6 e+10
+# min age is 5100
+
+
+# NOW WE CREATE THE AGE SAMPLING FOR ALL STARS:
+#age_sampling = logspace(log10(age_min), log10(age_max), 500)
+
+age_sampling = arange(age_min, age_max, 1.0e+4)
+#print(age_sampling)
+print(size(age_sampling))
+
+#subplots()
+#plot(age_sampling,'x')
+#xscale('log')
+
+# we write down all the maximum ages for each mass:
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+
+
+
+maxages = zeros(21)
+inttemp = zeros((21,52))
+intlumi = zeros(21) 
+
+maxages[0] = max(M120[:,2])
+it120 = interp1d(M120[:,2], M120[:,0])
+il120 = interp1d(M120[:,2], M120[:,1])
+
+maxages[1] = max(M85[:,2])
+it85 = interp1d(M85[:,2], M85[:,0])
+il85 = interp1d(M85[:,2], M85[:,1])
+
+maxages[2] = max(M60[:,2])
+it60 = interp1d(M60[:,2], M60[:,0])
+il60 = interp1d(M60[:,2], M60[:,1])
+
+maxages[3] = max(M40[:,2])
+it40 = interp1d(M40[:,2], M40[:,0])
+il40 = interp1d(M40[:,2], M40[:,1])
+
+maxages[4] = max(M25[:,2])
+it25 = interp1d(M25[:,2], M25[:,0])
+il25 = interp1d(M25[:,2], M25[:,1])
+
+maxages[5] = max(M20[:,2])
+it20 = interp1d(M20[:,2], M20[:,0])
+il20 = interp1d(M20[:,2], M20[:,1])
+
+maxages[6] = max(M15[:,2])
+it15 = interp1d(M15[:,2], M15[:,0])
+il15 = interp1d(M15[:,2], M15[:,1])
+
+maxages[7] = max(M12[:,2])
+it12 = interp1d(M12[:,2], M12[:,0])
+il12 = interp1d(M12[:,2], M12[:,1])
+
+maxages[8] = max(M9[:,2])
+it9 = interp1d(M9[:,2], M9[:,0])
+il9 = interp1d(M9[:,2], M9[:,1])
+
+maxages[9] = max(M7[:,2])
+it7 = interp1d(M7[:,2], M7[:,0])
+il7 = interp1d(M7[:,2], M7[:,1])
+
+maxages[10] = max(M5[:,2])
+it5 = interp1d(M5[:,2], M5[:,0])
+il5 = interp1d(M5[:,2], M5[:,1])
+
+maxages[11] = max(M4[:,2])
+it4 = interp1d(M4[:,2], M4[:,0])
+il4 = interp1d(M4[:,2], M4[:,1])
+
+maxages[12] = max(M3[:,2])
+it3 = interp1d(M3[:,2], M3[:,0])
+il3 = interp1d(M3[:,2], M3[:,1])
+
+maxages[13] = max(M2_5[:,2])
+it2_5 = interp1d(M2_5[:,2], M2_5[:,0])
+il2_5 = interp1d(M2_5[:,2], M2_5[:,1])
+
+maxages[14] = max(M2[:,2])
+it2 = interp1d(M2[:,2], M2[:,0])
+il2 = interp1d(M2[:,2], M2[:,1])
+
+maxages[15] = max(M1_7[:,2])
+it1_7 = interp1d(M1_7[:,2], M1_7[:,0])
+il1_7 = interp1d(M1_7[:,2], M1_7[:,1])
+
+maxages[16] = max(M1_5[:,2])
+it1_5 = interp1d(M1_5[:,2], M1_5[:,0])
+il1_5 = interp1d(M1_5[:,2], M1_5[:,1])
+
+maxages[17] = max(M1_25[:,2])
+it1_25 = interp1d(M1_25[:,2], M1_25[:,0])
+il1_25 = interp1d(M1_25[:,2], M1_25[:,1])
+
+maxages[18] = max(M1[:,2])
+it1 = interp1d(M1[:,2], M1[:,0])
+il1 = interp1d(M1[:,2], M1[:,1])
+
+maxages[19] = max(M0_9[:,2])
+it0_9 = interp1d(M0_9[:,2], M0_9[:,0])
+il0_9 = interp1d(M0_9[:,2], M0_9[:,1])
+
+maxages[20] = max(M0_8[:,2])
+it0_8 = interp1d(M0_8[:,2], M0_8[:,0])
+il0_8 = interp1d(M0_8[:,2], M0_8[:,1])
+
+#print('maxages', maxages)
+
+#maxages 
+#[  3.07133500e+06   3.38444600e+06   4.08139900e+06   5.34065200e+06
+#   7.85486400e+06   1.02480400e+07   1.45154100e+07   1.98055600e+07
+#   3.16375000e+07   5.01385300e+07   1.00218600e+08   1.65861400e+08
+#   3.41301900e+08   5.70821000e+08   1.02795100e+09   1.39903500e+09
+#   1.98673600e+09   3.58574800e+09   7.28502400e+09   1.07293700e+10
+#   1.52423500e+10]
+
+#this we use just once:
+'''
+diff = zeros((size(maxages), size(age_sampling)))
+mins = zeros(size(maxages))
+limse = zeros(size(maxages))
+
+for i in range(0, size(maxages)):
+	for j in range(0, size(age_sampling)):
+		diff[i,j] = abs(age_sampling[j] - maxages[i])
+	mins[i] = min(diff[i,])
+
+
+for i in range(0, size(maxages)):
+	for j in range(0, size(age_sampling)):
+		if mins[i] == diff[i,j]:
+			print(j)
+
+print(mins)
+''' 
+
+
+
+bnds = zeros(size(maxages))
+bnds[0] = 307				#120
+bnds[1] = 338				#85
+bnds[2] = 408				#60
+bnds[3] = 534				#40
+bnds[4] = 785				#25
+bnds[5] = 1024				#20
+bnds[6] = 1451				#15
+bnds[7] = 1980				#12
+bnds[8] = 3163				#9
+bnds[9] = 5013				#7
+bnds[10] = 10021			#5
+bnds[11] = 16586			#4
+bnds[12] = 34130			#3
+bnds[13] = 57082			#2.5
+bnds[14] = 102795			#2
+bnds[15] = 139903			#1.7
+bnds[16] = 198673			#1.5
+bnds[17] = 358574			#1.25
+bnds[18] = 728502			#1
+bnds[19] = 1072936			#0_9
+bnds[20] = 1524234			#0_8
+
+#print(bnds)
+
+
+subplots()
+plot(M0_8[:,2], M0_8[:,1], '-x',markersize = 5)
+plot(M0_9[:,2], M0_9[:,1], '-x', markersize = 5)
+plot(M1[:,2], M1[:,1], '-x', markersize = 5)
+plot(M3[:,2], M3[:,1], '-x', markersize = 5)
+plot(M12[:,2], M12[:,1], '-x', markersize = 5)
+plot(M15[:,2], M15[:,1], '-x', markersize = 5)
+plot(M40[:,2], M40[:,1], '-x', markersize = 5)
+plot(M60[:,2], M60[:,1], '-x', markersize = 5)
+plot(M120[:,2], M120[:,1], '-x', markersize = 5)
+plot(age_sampling[0:int(bnds[20])], il0_8(age_sampling[0:int(bnds[20])]), 'o', markersize = 2, alpha = 0.6)
+plot(age_sampling[0:int(bnds[19])], il0_9(age_sampling[0:int(bnds[19])]), 'o', markersize = 2, alpha = 0.6)
+plot(age_sampling[0:int(bnds[18])], il1(age_sampling[0:int(bnds[18])]), 'o', markersize = 2, alpha = 0.6)
+plot(age_sampling[0:int(bnds[12])], il3(age_sampling[0:int(bnds[12])]), 'o', markersize = 2, alpha = 0.6)
+plot(age_sampling[0:int(bnds[7])], il12(age_sampling[0:int(bnds[7])]), 'o', markersize = 2, alpha = 0.6)
+plot(age_sampling[0:int(bnds[6])], il15(age_sampling[0:int(bnds[6])]), 'o', markersize = 2, alpha = 0.6)
+plot(age_sampling[0:int(bnds[3])], il40(age_sampling[0:int(bnds[3])]), 'o', markersize = 2, alpha = 0.6)
+plot(age_sampling[0:int(bnds[2])], il60(age_sampling[0:int(bnds[2])]), 'o', markersize = 2, alpha = 0.6)
+plot(age_sampling[0:int(bnds[0])], il120(age_sampling[0:int(bnds[0])]), 'o', markersize = 2, alpha = 0.6)
+xscale('log')
+xlabel('age')
+ylabel('log($T_{eff}$)')
+
+
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+
+'''
+master_data = zeros((size(age_sampling),43))
+
+master_data[:,0] = age_sampling 
+master_data[:int(bnds[20]),1] = it0_8(age_sampling[0:int(bnds[20])])
+master_data[:int(bnds[20]),2] = il0_8(age_sampling[0:int(bnds[20])])
+master_data[:int(bnds[19]),3] = it0_9(age_sampling[0:int(bnds[19])])
+master_data[:int(bnds[19]),4] = il0_9(age_sampling[0:int(bnds[19])])
+master_data[:int(bnds[18]),5] = it1(age_sampling[0:int(bnds[18])])
+master_data[:int(bnds[18]),6] = il1(age_sampling[0:int(bnds[18])])
+master_data[:int(bnds[17]),7] = it1_25(age_sampling[0:int(bnds[17])])
+master_data[:int(bnds[17]),8] = il1_25(age_sampling[0:int(bnds[17])])
+master_data[:int(bnds[16]),9] = it1_5(age_sampling[0:int(bnds[16])])
+master_data[:int(bnds[16]),10] = il1_5(age_sampling[0:int(bnds[16])])
+master_data[:int(bnds[15]),11] = it1_7(age_sampling[0:int(bnds[15])])
+master_data[:int(bnds[15]),12] = il1_7(age_sampling[0:int(bnds[15])])
+master_data[:int(bnds[14]),13] = it2(age_sampling[0:int(bnds[14])])
+master_data[:int(bnds[14]),14] = il2(age_sampling[0:int(bnds[14])])
+master_data[:int(bnds[13]),15] = it2_5(age_sampling[0:int(bnds[13])])
+master_data[:int(bnds[13]),16] = il2_5(age_sampling[0:int(bnds[13])])
+master_data[:int(bnds[12]),17] = it3(age_sampling[0:int(bnds[12])])
+master_data[:int(bnds[12]),18] = il3(age_sampling[0:int(bnds[12])])
+master_data[:int(bnds[11]),19] = it4(age_sampling[0:int(bnds[11])])
+master_data[:int(bnds[11]),20] = il4(age_sampling[0:int(bnds[11])])
+master_data[:int(bnds[10]),21] = it5(age_sampling[0:int(bnds[10])])
+master_data[:int(bnds[10]),22] = il5(age_sampling[0:int(bnds[10])])
+master_data[:int(bnds[9]),23] = it7(age_sampling[0:int(bnds[9])])
+master_data[:int(bnds[9]),24] = il7(age_sampling[0:int(bnds[9])])
+master_data[:int(bnds[8]),25] = it9(age_sampling[0:int(bnds[8])])
+master_data[:int(bnds[8]),26] = il9(age_sampling[0:int(bnds[8])])
+master_data[:int(bnds[7]),27] = it12(age_sampling[0:int(bnds[7])])
+master_data[:int(bnds[7]),28] = il12(age_sampling[0:int(bnds[7])])
+master_data[:int(bnds[6]),29] = it15(age_sampling[0:int(bnds[6])])
+master_data[:int(bnds[6]),30] = il15(age_sampling[0:int(bnds[6])])
+master_data[:int(bnds[5]),31] = it20(age_sampling[0:int(bnds[5])])
+master_data[:int(bnds[5]),32] = il20(age_sampling[0:int(bnds[5])])
+master_data[:int(bnds[4]),33] = it25(age_sampling[0:int(bnds[4])])
+master_data[:int(bnds[4]),34] = il25(age_sampling[0:int(bnds[4])])
+master_data[:int(bnds[3]),35] = it40(age_sampling[0:int(bnds[3])])
+master_data[:int(bnds[3]),36] = il40(age_sampling[0:int(bnds[3])])
+master_data[:int(bnds[2]),37] = it60(age_sampling[0:int(bnds[2])])
+master_data[:int(bnds[2]),38] = il60(age_sampling[0:int(bnds[2])])
+master_data[:int(bnds[1]),39] = it85(age_sampling[0:int(bnds[1])])
+master_data[:int(bnds[1]),40] = il85(age_sampling[0:int(bnds[1])])
+master_data[:int(bnds[0]),41] = it3(age_sampling[0:int(bnds[0])])
+master_data[:int(bnds[0]),42] = il3(age_sampling[0:int(bnds[0])])
+'''
+
+# MASTER_DATA IS NOW ......... LIFE!
+
+#print(master_data)
+
+#savetxt('master_data_short.dat', master_data[:1000,:])
+
+
