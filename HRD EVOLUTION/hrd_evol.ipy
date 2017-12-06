@@ -1,0 +1,172 @@
+%pylab
+
+#Evolution of stars in the HR diagrams
+#Evolution of only one star, here we use M3 data
+
+
+master_data = loadtxt('master_data_4.dat')
+
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+
+age = master_data[:,0]
+t0_8 = master_data[:,1]
+l0_8 = master_data[:,2]
+t0_9 = master_data[:,3]
+l0_9 = master_data[:,4]
+t1 = master_data[:,5]
+l1 = master_data[:,6]
+t1_25 = master_data[:,7]
+l1_25 = master_data[:,8]
+t1_5 = master_data[:,9]
+l1_5 = master_data[:,10]
+t1_7 = master_data[:,11]
+l1_7 = master_data[:,12]
+t2 = master_data[:,13]
+l2 = master_data[:,14]
+t2_5 = master_data[:,15]
+l2_5 = master_data[:,16]
+t3 = master_data[:,17]
+l3 = master_data[:,18]
+t4 = master_data[:,19]
+l4 = master_data[:,20]
+t5 = master_data[:,21]
+l5 = master_data[:,22]
+t7 = master_data[:,23]
+l7 = master_data[:,24]
+t9 = master_data[:,25]
+l9 = master_data[:,26]
+t12 = master_data[:,27]
+l12 = master_data[:,28]
+t15 = master_data[:,29]
+l15 = master_data[:,30]
+t20 = master_data[:,31]
+l20 = master_data[:,32]
+t25 = master_data[:,33]
+l25 = master_data[:,34]
+t40 = master_data[:,35]
+l40 = master_data[:,36]
+t60 = master_data[:,37]
+l60 = master_data[:,38]
+t85 = master_data[:,39]
+l85 = master_data[:,40]
+t120 = master_data[:,41]
+l120 = master_data[:,42]
+
+datasize = size(age)
+
+
+
+#take only the third column to have ages
+age1=M1_5[:,2]
+#age=M3[:,2]
+age2 = M25[:,2]
+age3 = M85[:,2]
+
+    
+# we can define the size in the following way:
+# from the relation: L = 4*pi*R^2*sigma*T^4, the radius would be:
+# R ~ sqrt(L/T^4)
+sc = 70
+
+ss0_8 = sc * sqrt(l0_8[:]/t0_8[:]**4)
+ss0_9 = sc * sqrt(l0_9[:]/t0_9[:]**4)
+ss1 = sc * sqrt(l1[:]/t1[:]**4)
+ss1_25 = sc * sqrt(l1_25[:]/t1_25[:]**4)
+ss1_5 = sc * sqrt(l1_5[:]/t1_5[:]**4)
+ss1_7 = sc * sqrt(l1_7[:]/t1_7[:]**4)
+ss2 = sc * sqrt(l2[:]/t2[:]**4)
+ss2_5 = sc * sqrt(l2_5[:]/t2_5[:]**4)
+ss3 = sc * sqrt(l3[:]/t3[:]**4)
+ss4 = sc * sqrt(l4[:]/t4[:]**4)
+ss5 = sc * sqrt(l5[:]/t5[:]**4)
+ss7 = sc * sqrt(l7[:]/t7[:]**4)
+ss9 = sc * sqrt(l9[:]/t9[:]**4)
+ss12 = sc * sqrt(l12[:]/t12[:]**4)
+ss15 = sc * sqrt(l15[:]/l15[:]**4)
+ss20 = sc * sqrt(l20[:]/t20[:]**4)
+ss25 = sc * sqrt(l25[:]/t25[:]**4)
+ss40 = sc * sqrt(l40[:]/t40[:]**4)
+ss60 = sc * sqrt(l60[:]/t60[:]**4)
+ss85 = sc * sqrt(l85[:]/t85[:]**4)
+ss120 = sc * sqrt(l120[:]/t120[:]**4)
+
+
+# the colour, we correlate with the temperature
+cc0_8 = cm.jet_r((t0_8[:])/max(t120[:]))
+cc0_9 = cm.jet_r((t0_9[:])/max(t120[:]))
+cc1 = cm.jet_r((t1[:])/max(t120[:]))
+cc1_25 = cm.jet_r((t1_25[:])/max(t120[:]))
+cc1_5 = cm.jet_r((t1_5[:])/max(t120[:]))
+cc1_7 = cm.jet_r((t1_7[:])/max(t120[:]))
+cc2 = cm.jet_r((t2[:])/max(t120[:]))
+cc2_5 = cm.jet_r((t2_5[:])/max(t120[:]))
+cc3 = cm.jet_r((t3[:])/max(t120[:]))
+cc4 = cm.jet_r((t4[:])/max(t120[:]))
+cc5 = cm.jet_r((t5[:])/max(t120[:]))
+cc7 = cm.jet_r((t7[:])/max(t120[:]))
+cc9 = cm.jet_r((t9[:])/max(t120[:]))
+cc12 = cm.jet_r((t12[:])/max(t120[:]))
+cc15 = cm.jet_r((t15[:])/max(t120[:]))
+cc20 = cm.jet_r((t20[:])/max(t120[:]))
+cc25 = cm.jet_r((t25[:])/max(t120[:]))
+cc40 = cm.jet_r((t40[:])/max(t120[:]))
+cc60 = cm.jet_r((t60[:])/max(t120[:]))
+cc85 = cm.jet_r((t85[:])/max(t120[:]))
+cc120 = cm.jet_r((t120[:])/max(t120[:]))
+
+
+    # Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+    # 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+
+for i in range(0,datasize):
+    plot(t0_8[i], l0_8[i],'o-', markersize=ss0_8[i], color=cc0_8[i], label = '$M=0.8$')   #plot the HR diagram one by one
+    plot(t0_9[i], l0_9[i],'o-', markersize=ss0_9[i], color=cc0_9[i], label = '$M=0.9$')
+    plot(t1[i], l1[i],'o-', markersize=ss1[i], color=cc1[i], label = '$M=1$')
+    plot(t1_25[i], l1_25[i],'o-', markersize=ss1_25[i], color=cc1_25[i], label = '$M=1.25$')
+    plot(t1_5[i], l1_5[i],'o-', markersize=ss1_5[i], color=cc1_5[i], label = '$M=1.5$')
+    plot(t1_7[i], l1_7[i],'o-', markersize=ss1_7[i], color=cc1_7[i], label = '$M=1.7$')
+    plot(t2[i], l2[i],'o-', markersize=ss2[i], color=cc2[i], label = '$M=2$')
+    plot(t3[i], l3[i],'o-', markersize=ss3[i], color=cc3[i], label = '$M=3$')
+    plot(t4[i], l4[i],'o-', markersize=ss4[i], color=cc4[i], label = '$M=4$')
+    plot(t5[i], l5[i],'o-', markersize=ss5[i], color=cc5[i], label = '$M=5$')
+    plot(t7[i], l7[i],'o-', markersize=ss7[i], color=cc7[i], label = '$M=7$')
+    plot(t9[i], l9[i],'o-', markersize=ss9[i], color=cc9[i], label = '$M=9$')
+    plot(t12[i], l12[i],'o-', markersize=ss12[i], color=cc12[i], label = '$M=12$')
+    plot(t15[i], l15[i],'o-', markersize=ss15[i], color=cc15[i], label = '$M=15$')
+    plot(t20[i], l20[i],'o-', markersize=ss20[i], color=cc20[i], label = '$M=20$')
+    plot(t25[i], l25[i],'o-', markersize=ss25[i], color=cc25[i], label = '$M=25$')
+    plot(t40[i], l40[i],'o-', markersize=ss40[i], color=cc40[i], label = '$M=40$')
+    plot(t60[i], l60[i],'o-', markersize=ss60[i], color=cc60[i], label = '$M=60$')
+    plot(t85[i], l85[i],'o-', markersize=ss85[i], color=cc85[i], label = '$M=85$')
+    plot(t120[i], l120[i],'o-', markersize=ss120[i], color=cc120[i], label = '$M=120$')
+    xlim(5.2,3.5)
+    ylim(-3,9.8)
+    xlabel('log($T_{eff}$)')
+    ylabel('log($L$)')
+    title('HR Diagram for Zo = 0.001')
+    grid()
+    legend(loc = 3, fontsize = 8, markerscale = 0.5)
+    
+
+    #put the text on the diagram with the age of the star for each step
+    figtext(0.44, 0.85, '{:4.3e}'.format(age[i]),fontsize = 12)
+    figtext(0.37, 0.85, 'AGE:',fontsize = 12, color = 'red',fontweight = 'bold')
+    figtext(0.59, 0.85, 'Years',fontsize = 12)
+    
+    #savefig('image_%f.png' %i)
+    
+    
+    #figtext(0.21, 0.8, (M85[i,2] * 1.0e-6 ),fontsize = 12)
+    #figtext(0.13, 0.8, 'AGE:',fontsize = 12, color = 'red',fontweight = 'bold')
+    #figtext(0.36, 0.8, 'Million Years for M85',fontsize = 12)
+    
+    #wait before to plot the next point
+    pause(0.0000001)
+    show()
+    
+    #remove the previous point to have en evolution
+    clf()
+    
+    
+#Then we need to generalized this for all stars and fix the problem of the error message after the code running

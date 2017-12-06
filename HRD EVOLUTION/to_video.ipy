@@ -1,0 +1,6 @@
+import os
+
+# With ffmpeg
+os.system("ffmpeg -f image2 -r 24 -i image_*.png -vcodec mpeg4 -y grb170817A_movie.mp4")
+
+#  -b:v 1000k

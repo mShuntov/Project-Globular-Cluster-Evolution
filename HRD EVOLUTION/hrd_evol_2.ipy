@@ -1,0 +1,134 @@
+%pylab
+# -*- coding: utf-8 -*-
+# Copyright (C) 2015 Laboratoire d'Astrophysique de Marseille
+# Copyright (C) 2015 Master SPaCE
+#
+# Licensed under the CeCILL-v2 licence - see Licence_CeCILL_V2-en.txt
+# Author: Denis Burgarella
+
+"""
+Create a random distribution of points (cluster), 
+change the color and size of points
+move the cluster (r, theta, phi)
+This is done iteratively until we close the figure.
+===================================================
+see, e.g., http://www.labri.fr/perso/nrougier/teaching/matplotlib/#animation
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.animation as animation
+
+#pause = True
+#def onClick(event):
+#    global pause
+#    pause ^= True
+
+t_l = loadtxt('master_data_4.dat')
+
+
+'''
+# We reset the main parameters of the plot
+def update_plot(i, temp, lum, scat):#, color, size, elev, azim, dist, scat):
+    global pause
+    # Set position on HRD
+    scat.set_array(temp[i], lum[i]) 
+    # Set colors...
+    #scat.set_array(color[i])
+    # Set sizes...
+    #scat.set_sizes(size[i])
+    # Set elevation annd azimuth...
+    #ax.view_init(elev=elev[i], azim=azim[i])
+    # Set distance...
+    #ax.dist=dist[i]
+
+    return scat,
+
+
+#import IPython; IPython.embed()
+# How many frame?
+numframes = size(t_l[:,0])
+# How many points?
+numpoints = 2000
+
+# Initialization the position (x, y, z), the color (c) and the size (s) of the points
+mu, sigma = 0, 0.25 # mean and standard deviation
+star_t = t_l[0,1]
+star_l = t_l[0,2]
+x = np.random.normal(mu, sigma, numpoints)
+y = np.random.normal(mu, sigma, numpoints)
+z = np.random.normal(mu, sigma, numpoints)
+c, s = np.random.random((2, numpoints))
+
+# Definition of the data for the new values for each new plot
+#color_data = np.random.random((numframes, numpoints))
+#size_data = 200*np.random.random((numframes, numpoints))
+#elev_data = np.linspace(0, 360, numframes)
+#azim_data = np.linspace(0, 360, numframes)
+#dist_data = np.linspace(50, 1, numframes)
+
+fig = plt.figure()
+#ax = Axes3D(fig,  axisbg='pink')
+#ax = Axes3D(fig)
+
+# We do not want the axis
+#ax.set_axis_off()
+
+# This is where we plot the cluster
+scat = scatter(star_t, star_l, s = 200)#, z, c=c, s=s, alpha=0.5)
+xlim(5,3.50)
+ylim(-3,9)
+#ax.set_zlim(xmin,xmax)
+
+# This is the animation. In fargs, we provide the data for each new plot.
+#time_text = text(0.05, 0.95,'',horizontalalignment='left',verticalalignment='top', transform=transAxes)
+#fig.canvas.mpl_connect('button_press_event', onClick)
+ani = animation.FuncAnimation(fig, update_plot, frames=range(numframes),
+                                  fargs=(t_l[:,1], t_l[:,2], 
+                                  scat), blit=False, interval=10, repeat=True)
+
+
+#ani = animation.FuncAnimation(fig, update_plot, frames=range(numframes),
+#                                  fargs=(color_data, size_data, 
+#                                  elev_data, azim_data, dist_data,
+#                                  scat), blit=False, interval=10, repeat=True)
+
+ani.save('hrd_evol.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
+
+#plt.show()
+'''
+
+
+
+# First set up the figure, the axis, and the plot element we want to animate
+fig = plt.figure()
+ax = plt.axes(xlim=(5, 3.5), ylim=(-3, 9))
+scat, = ax.scatter(t_l[:,1], t_l[:,2], lw=2)
+
+# initialization function: plot the background of each frame
+def init():
+    scat.set_data(t_l[0,1], t_l[0,2])
+    return scat,
+
+# animation function.  This is called sequentially
+def animate(i):
+    x = t_l[:,1]
+    y = t_l[:,1]
+    scat.set_data(x, y)
+    return scat,
+
+# call the animator.  blit=True means only re-draw the parts that have changed.
+anim = animation.FuncAnimation(fig, animate, init_func=init,
+                               frames=200, interval=20, blit=True)
+
+# save the animation as an mp4.  This requires ffmpeg or mencoder to be
+# installed.  The extra_args ensure that the x264 codec is used, so that
+# the video can be embedded in html5.  You may need to adjust this for
+# your system: for more information, see
+# http://matplotlib.sourceforge.net/api/animation_api.html
+anim.save('hrd_evol.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
+
+plt.show()
+
+
