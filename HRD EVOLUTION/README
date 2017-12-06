@@ -1,0 +1,12 @@
+This folder contains the master data (master_data_4.dat) that we will use to construct the evolution on the HRD diagram and also the python codes for that.
+
+In the file evolution2.ipy the master data is being made and saved
+
+In the file hrd_diagram.ipy the evolution on the HRD diagram is being done with the same method as before
+
+In the file hrd_diagram.ipy I tried to do the evolution with a different method but it doesn't work
+
+The file to_video.ipy is supposed to make a video out of the images that we save from the HRD evolution code, but this doesn't quite work.
+
+
+For the HRD evolution the only thing left to be done is to figure out how to do the color correctly and save it to a .mp4 video file.
