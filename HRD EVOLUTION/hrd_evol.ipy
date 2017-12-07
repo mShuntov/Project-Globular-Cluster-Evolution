@@ -57,11 +57,6 @@ datasize = size(age)
 
 
 
-#take only the third column to have ages
-age1=M1_5[:,2]
-#age=M3[:,2]
-age2 = M25[:,2]
-age3 = M85[:,2]
 
     
 # we can define the size in the following way:
@@ -93,6 +88,43 @@ ss120 = sc * sqrt(l120[:]/t120[:]**4)
 
 
 # the colour, we correlate with the temperature
+
+bluest = max(t120)    #4.773
+redest = 3.768
+
+print('bluest temperature =', bluest)
+print('redest temperature =', redest)
+
+#this is how we define the colors using colormap stuff
+#with norm we define that we want the minimum value for the color (thatis the most red) is the lowest temperature we have
+#and the most blue color is the maximum temperature we have.
+
+norm = mpl.colors.Normalize(vmin = redest, vmax = bluest)
+
+cc0_88 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t0_8[:]))
+cc0_99 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t0_9[:]))
+cc11 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t1[:]))
+cc1_255 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t1_25[:]))
+cc1_55 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t1_5[:]))
+cc1_77 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t1_7[:]))
+cc22 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t2[:]))
+cc2_55 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t2_5[:]))
+cc33 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t3[:]))
+cc44 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t4[:]))
+cc55 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t5[:]))
+cc77 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t7[:]))
+cc99 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t9[:]))
+cc122 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t12[:]))
+cc155 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t15[:]))
+cc200 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t20[:]))
+cc255 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t25[:]))
+cc400 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t40[:]))
+cc600 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t60[:]))
+cc855 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t85[:]))
+cc1200 = cm.ScalarMappable(norm=norm, cmap=cm.spectral_r).to_rgba((t120[:]))
+
+# the below ones we dont use anymore and are wrong.
+'''
 cc0_8 = cm.jet_r((t0_8[:])/max(t120[:]))
 cc0_9 = cm.jet_r((t0_9[:])/max(t120[:]))
 cc1 = cm.jet_r((t1[:])/max(t120[:]))
@@ -114,40 +146,42 @@ cc40 = cm.jet_r((t40[:])/max(t120[:]))
 cc60 = cm.jet_r((t60[:])/max(t120[:]))
 cc85 = cm.jet_r((t85[:])/max(t120[:]))
 cc120 = cm.jet_r((t120[:])/max(t120[:]))
-
+'''
 
     # Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
     # 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
 
 for i in range(0,datasize):
-    plot(t0_8[i], l0_8[i],'o-', markersize=ss0_8[i], color=cc0_8[i], label = '$M=0.8$')   #plot the HR diagram one by one
-    plot(t0_9[i], l0_9[i],'o-', markersize=ss0_9[i], color=cc0_9[i], label = '$M=0.9$')
-    plot(t1[i], l1[i],'o-', markersize=ss1[i], color=cc1[i], label = '$M=1$')
-    plot(t1_25[i], l1_25[i],'o-', markersize=ss1_25[i], color=cc1_25[i], label = '$M=1.25$')
-    plot(t1_5[i], l1_5[i],'o-', markersize=ss1_5[i], color=cc1_5[i], label = '$M=1.5$')
-    plot(t1_7[i], l1_7[i],'o-', markersize=ss1_7[i], color=cc1_7[i], label = '$M=1.7$')
-    plot(t2[i], l2[i],'o-', markersize=ss2[i], color=cc2[i], label = '$M=2$')
-    plot(t3[i], l3[i],'o-', markersize=ss3[i], color=cc3[i], label = '$M=3$')
-    plot(t4[i], l4[i],'o-', markersize=ss4[i], color=cc4[i], label = '$M=4$')
-    plot(t5[i], l5[i],'o-', markersize=ss5[i], color=cc5[i], label = '$M=5$')
-    plot(t7[i], l7[i],'o-', markersize=ss7[i], color=cc7[i], label = '$M=7$')
-    plot(t9[i], l9[i],'o-', markersize=ss9[i], color=cc9[i], label = '$M=9$')
-    plot(t12[i], l12[i],'o-', markersize=ss12[i], color=cc12[i], label = '$M=12$')
-    plot(t15[i], l15[i],'o-', markersize=ss15[i], color=cc15[i], label = '$M=15$')
-    plot(t20[i], l20[i],'o-', markersize=ss20[i], color=cc20[i], label = '$M=20$')
-    plot(t25[i], l25[i],'o-', markersize=ss25[i], color=cc25[i], label = '$M=25$')
-    plot(t40[i], l40[i],'o-', markersize=ss40[i], color=cc40[i], label = '$M=40$')
-    plot(t60[i], l60[i],'o-', markersize=ss60[i], color=cc60[i], label = '$M=60$')
-    plot(t85[i], l85[i],'o-', markersize=ss85[i], color=cc85[i], label = '$M=85$')
-    plot(t120[i], l120[i],'o-', markersize=ss120[i], color=cc120[i], label = '$M=120$')
+    plot(t0_8[i], l0_8[i],'o-', markersize=ss0_8[i], color=cc0_88[i], label = '$M=0.8$')   #plot the HR diagram one by one
+    plot(t0_9[i], l0_9[i],'o-', markersize=ss0_9[i], color=cc0_99[i], label = '$M=0.9$')
+    plot(t1[i], l1[i],'o-', markersize=ss1[i], color=cc11[i], label = '$M=1$')
+    plot(t1_25[i], l1_25[i],'o-', markersize=ss1_25[i], color=cc1_255[i], label = '$M=1.25$')
+    plot(t1_5[i], l1_5[i],'o-', markersize=ss1_5[i], color=cc1_55[i], label = '$M=1.5$')
+    plot(t1_7[i], l1_7[i],'o-', markersize=ss1_7[i], color=cc1_77[i], label = '$M=1.7$')
+    plot(t2[i], l2[i],'o-', markersize=ss2[i], color=cc22[i], label = '$M=2$')
+    plot(t2_5[i], l2_5[i],'o-', markersize=ss2[i], color=cc2_55[i], label = '$M=2.5$')
+    plot(t3[i], l3[i],'o-', markersize=ss3[i], color=cc33[i], label = '$M=3$')
+    plot(t4[i], l4[i],'o-', markersize=ss4[i], color=cc44[i], label = '$M=4$')
+    plot(t5[i], l5[i],'o-', markersize=ss5[i], color=cc55[i], label = '$M=5$')
+    plot(t7[i], l7[i],'o-', markersize=ss7[i], color=cc77[i], label = '$M=7$')
+    plot(t9[i], l9[i],'o-', markersize=ss9[i], color=cc99[i], label = '$M=9$')
+    plot(t12[i], l12[i],'o-', markersize=ss12[i], color=cc122[i], label = '$M=12$')
+    plot(t15[i], l15[i],'o-', markersize=ss15[i], color=cc155[i], label = '$M=15$')
+    plot(t20[i], l20[i],'o-', markersize=ss20[i], color=cc200[i], label = '$M=20$')
+    plot(t25[i], l25[i],'o-', markersize=ss25[i], color=cc255[i], label = '$M=25$')
+    plot(t40[i], l40[i],'o-', markersize=ss40[i], color=cc400[i], label = '$M=40$')
+    plot(t60[i], l60[i],'o-', markersize=ss60[i], color=cc600[i], label = '$M=60$')
+    plot(t85[i], l85[i],'o-', markersize=ss85[i], color=cc855[i], label = '$M=85$')
+    plot(t120[i], l120[i],'o-', markersize=ss120[i], color=cc1200[i], label = '$M=120$')
     xlim(5.2,3.5)
     ylim(-3,9.8)
     xlabel('log($T_{eff}$)')
     ylabel('log($L$)')
     title('HR Diagram for Zo = 0.001')
-    grid()
-    legend(loc = 3, fontsize = 8, markerscale = 0.5)
     
+    legend(loc = 3, fontsize = 7.5, markerscale = 0.5)
+    
+
 
     #put the text on the diagram with the age of the star for each step
     figtext(0.44, 0.85, '{:4.3e}'.format(age[i]),fontsize = 12)
