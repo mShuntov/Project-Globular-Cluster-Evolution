@@ -4,7 +4,7 @@
 #Evolution of only one star, here we use M3 data
 
 
-master_data = loadtxt('master_data_4.dat')
+master_data = loadtxt('master_data_5.dat')
 
 # Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
 # 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
@@ -62,12 +62,12 @@ datasize = size(age)
 # we can define the size in the following way:
 # from the relation: L = 4*pi*R^2*sigma*T^4, the radius would be:
 # R ~ sqrt(L/T^4)
-sc = 90
+sc = 130
 
-ss0_8 = sc * sqrt(l0_8[:]/t0_8[:]**4)
-ss0_9 = sc * sqrt(l0_9[:]/t0_9[:]**4)
-ss1 = sc * sqrt(l1[:]/t1[:]**4)
-ss1_25 = sc * sqrt(l1_25[:]/t1_25[:]**4)
+ss0_8 = (sc-100) * real(sqrt(abs(l0_8[:])/t0_8[:]**4))
+ss0_9 = (sc-25) * real(sqrt(abs(l0_9[:])/t0_9[:]**4))
+ss1 = sc * real(sqrt(abs(l1[:])/t1[:]**4))
+ss1_25 = sc * real(sqrt(abs(l1_25)[:]/t1_25[:]**4))
 ss1_5 = sc * sqrt(l1_5[:]/t1_5[:]**4)
 ss1_7 = sc * sqrt(l1_7[:]/t1_7[:]**4)
 ss2 = sc * sqrt(l2[:]/t2[:]**4)
@@ -90,7 +90,7 @@ ss120 = sc * sqrt(l120[:]/t120[:]**4)
 # the colour, we correlate with the temperature
 
 bluest = 4.85 #max(t120)    #4.773
-redest = 3.70
+redest = 3.7              #3.768
 
 print('bluest temperature =', bluest)
 print('redest temperature =', redest)
@@ -146,6 +146,8 @@ cc120 = cm.jet_r((t120[:])/max(t120[:]))
 
     # Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
     # 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+    
+figure(figsize(7.4,6.4))
 
 for i in range(0,datasize):
     plot(t0_8[i], l0_8[i],'o-', markersize=ss0_8[i], color=cc0_88[i], label = '$M=0.8$')   #plot the HR diagram one by one
@@ -155,7 +157,7 @@ for i in range(0,datasize):
     plot(t1_5[i], l1_5[i],'o-', markersize=ss1_5[i], color=cc1_55[i], label = '$M=1.5$')
     plot(t1_7[i], l1_7[i],'o-', markersize=ss1_7[i], color=cc1_77[i], label = '$M=1.7$')
     plot(t2[i], l2[i],'o-', markersize=ss2[i], color=cc22[i], label = '$M=2$')
-    plot(t2_5[i], l2_5[i],'o-', markersize=ss2[i], color=cc2_55[i], label = '$M=2.5$')
+    plot(t2_5[i], l2_5[i],'o-', markersize=ss2_5[i], color=cc2_55[i], label = '$M=2.5$')
     plot(t3[i], l3[i],'o-', markersize=ss3[i], color=cc33[i], label = '$M=3$')
     plot(t4[i], l4[i],'o-', markersize=ss4[i], color=cc44[i], label = '$M=4$')
     plot(t5[i], l5[i],'o-', markersize=ss5[i], color=cc55[i], label = '$M=5$')
@@ -172,8 +174,8 @@ for i in range(0,datasize):
     xlim(5.2,3.5)
     ylim(-3,9.8)
     xlabel('log($T_{eff}$)')
-    ylabel('log($L$)')
-    title('HR Diagram for Zo = 0.001')
+    ylabel('log($L/L_{\odot}$)')
+    title('Evolution of Stars in a Globular Cluster on HRD')
     
     legend(loc = 3, fontsize = 10, markerscale = 0.8)
     
@@ -184,7 +186,7 @@ for i in range(0,datasize):
     figtext(0.37, 0.85, 'AGE:',fontsize = 12, color = 'red',fontweight = 'bold')
     figtext(0.59, 0.85, 'Years',fontsize = 12)
     
-    #savefig('image_%f.png' %i)
+    savefig('image_%f.png' %i)
     
     
     #figtext(0.21, 0.8, (M85[i,2] * 1.0e-6 ),fontsize = 12)
@@ -192,12 +194,10 @@ for i in range(0,datasize):
     #figtext(0.36, 0.8, 'Million Years for M85',fontsize = 12)
     
     #wait before to plot the next point
-    pause(0.0000001)
-    show()
+    pause(0.000000000001)
+    #show()
     
     #remove the previous point to have en evolution
     clf()
-    
-figure(figsize(7,8))
 
 #Then we need to generalized this for all stars and fix the problem of the error message after the code running
