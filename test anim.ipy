@@ -1,0 +1,346 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Dec 11 20:22:16 2017
+
+@author: Audi
+"""
+
+
+
+from pylab import *
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.animation as animation
+
+#define the imf:
+
+def IMF(M):
+    return 0.060 * M**(-2.35)
+
+# the limits of the masses
+M_min = 0.8
+M_max = 120.
+
+N_pts = 100000
+
+h = 0.01
+u1 = np.random.uniform(low = M_min, high = M_max, size = (N_pts, ))
+u2 = np.random.uniform(low = 0., high = 1., size = (N_pts, ))
+
+# condition to accept the points: when the y-values are below the curve
+idx = np.where(u2 <= IMF(u1)/h)[0]   # acception criteria 
+v = u1[idx]
+
+#print(v)
+sizev = size(v)
+print('size of the imf distribution', sizev)
+
+# v should serve as the size in our 3d cluster plot...
+
+vmmin = (max(v))
+vmmax = (min(v))
+
+print('min mass for v:', vmmin)
+print('max mass for v:', vmmax)
+
+
+master_data = loadtxt('master_data_5.dat')
+
+age = master_data[:,0]
+sizerows = size(age)
+sizecolumns = size(master_data[0,:])
+sizecolumns_2 = int((sizecolumns-1)/2)
+print('sizecolumns_2:', sizecolumns_2)
+
+
+# next we will make matrixes that contain the color and luminosity of all the stars through
+# all the time
+
+color = zeros((sizerows, sizecolumns_2))
+lumin = zeros((sizerows, sizecolumns_2))
+
+for i in range(0, sizecolumns_2-2, 1):
+    color[:,i] = master_data[:,(i*2)+1]
+    lumin[:,i] = master_data[:,(i*2)+2]
+
+print('columns size:', sizecolumns)
+print('color size:', size(color[:,0]))
+print('lumin size:', size(lumin[:,0]))
+
+
+# we define the radius that is
+# R ~ sqrt(L/T^4)
+
+radus = real(sqrt(abs(lumin/color**4)))
+
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+# the number of masses is: 21
+nbins = 21
+
+print('this is the imf:', v)
+#hist(v, bins=nbins, normed = 'True')
+
+#the mass bins are:
+mbins = array([    0.80, 0.90, 1, 1.25, 1.5, 1.7, 2, 2.5, 3, 4, 5, 7, 9, 12, 15, 20, 25, 40, 60, 85, 120]) 
+print('the mass bins are:', mbins)
+
+no_stars_in_bins = zeros(nbins)
+
+# we count the numbers of stars in each bin
+for i in range(0,nbins-1):
+     for j in range(0,size(v)):
+           if (v[j] >= mbins[i] and v[j] < mbins[i+1]):
+                     no_stars_in_bins[i] += 1
+                    
+
+
+               
+print('the no_stars_in_bins are:', no_stars_in_bins)
+
+
+
+
+age = master_data[:,0]
+
+
+t0_8 = master_data[:,1]
+l0_8 = master_data[:,2]
+t0_9 = master_data[:,3]
+l0_9 = master_data[:,4]
+t1 = master_data[:,5]
+l1 = master_data[:,6]
+t1_25 = master_data[:,7]
+l1_25 = master_data[:,8]
+t1_5 = master_data[:,9]
+l1_5 = master_data[:,10]
+t1_7 = master_data[:,11]
+l1_7 = master_data[:,12]
+t2 = master_data[:,13]
+l2 = master_data[:,14]
+t2_5 = master_data[:,15]
+l2_5 = master_data[:,16]
+t3 = master_data[:,17]
+l3 = master_data[:,18]
+t4 = master_data[:,19]
+l4 = master_data[:,20]
+t5 = master_data[:,21]
+l5 = master_data[:,22]
+t7 = master_data[:,23]
+l7 = master_data[:,24]
+t9 = master_data[:,25]
+l9 = master_data[:,26]
+t12 = master_data[:,27]
+l12 = master_data[:,28]
+t15 = master_data[:,29]
+l15 = master_data[:,30]
+t20 = master_data[:,31]
+l20 = master_data[:,32]
+t25 = master_data[:,33]
+l25 = master_data[:,34]
+t40 = master_data[:,35]
+l40 = master_data[:,36]
+t60 = master_data[:,37]
+l60 = master_data[:,38]
+t85 = master_data[:,39]
+l85 = master_data[:,40]
+t120 = master_data[:,41]
+l120 = master_data[:,42]
+
+datasize = size(age)
+numframes = 50
+    
+# we can define the size in the following way:
+# from the relation: L = 4*pi*R^2*sigma*T^4, the radius would be:
+# R ~ sqrt(L/T^4)
+sc = 40
+
+ss0_8 = sc * sqrt(l0_8[:]/t0_8[:]**4)
+ss0_9 = sc * sqrt(l0_9[:]/t0_9[:]**4)
+ss1 = sc * sqrt(l1[:]/t1[:]**4)
+ss1_25 = sc * sqrt(l1_25[:]/t1_25[:]**4)
+ss1_5 = sc * sqrt(l1_5[:]/t1_5[:]**4)
+ss1_7 = sc * sqrt(l1_7[:]/t1_7[:]**4)
+ss2 = sc * sqrt(l2[:]/t2[:]**4)
+ss2_5 = sc * sqrt(l2_5[:]/t2_5[:]**4)
+ss3 = sc * sqrt(l3[:]/t3[:]**4)
+ss4 = sc * sqrt(l4[:]/t4[:]**4)
+ss5 = sc * sqrt(l5[:]/t5[:]**4)
+ss7 = sc * sqrt(l7[:]/t7[:]**4)
+ss9 = sc * sqrt(l9[:]/t9[:]**4)
+ss12 = sc * sqrt(l12[:]/t12[:]**4)
+ss15 = sc * sqrt(l15[:]/l15[:]**4)
+ss20 = sc * sqrt(l20[:]/t20[:]**4)
+ss25 = sc * sqrt(l25[:]/t25[:]**4)
+ss40 = sc * sqrt(l40[:]/t40[:]**4)
+ss60 = sc * sqrt(l60[:]/t60[:]**4)
+ss85 = sc * sqrt(l85[:]/t85[:]**4)
+ss120 = sc * sqrt(l120[:]/t120[:]**4)
+
+
+# the colour, we correlate with the temperature
+
+bluest = 4.85 #max(t120)    #4.773
+redest = 3.70
+
+print('bluest temperature =', bluest)
+print('redest temperature =', redest)
+
+norm = mpl.colors.Normalize(vmin = redest, vmax = bluest)
+
+cc0_88 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t0_8[:]))
+cc0_99 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t0_9[:]))
+cc11 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t1[:]))
+cc1_255 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t1_25[:]))
+cc1_55 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t1_5[:]))
+cc1_77 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t1_7[:]))
+cc22 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t2[:]))
+cc2_55 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t2_5[:]))
+cc33 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t3[:]))
+cc44 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t4[:]))
+cc55 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t5[:]))
+cc77 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t7[:]))
+cc99 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t9[:]))
+cc122 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t12[:]))
+cc155 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t15[:]))
+cc200 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t20[:]))
+cc255 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t25[:]))
+cc400 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t40[:]))
+cc600 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t60[:]))
+cc855 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t85[:]))
+cc1200 = cm.ScalarMappable(norm=norm, cmap=cm.jet_r).to_rgba((t120[:]))
+
+
+mu, sigma = 0, 0.25
+x1 = np.random.normal(mu, sigma, int(no_stars_in_bins[0]))
+y1 = np.random.normal(mu, sigma, int(no_stars_in_bins[0]))
+z1 = np.random.normal(mu, sigma, int(no_stars_in_bins[0]))
+
+x2 = np.random.normal(mu, sigma, int(no_stars_in_bins[1]))
+y2 = np.random.normal(mu, sigma, int(no_stars_in_bins[1]))
+z2 = np.random.normal(mu, sigma, int(no_stars_in_bins[1]))
+
+x3 = np.random.normal(mu, sigma, int(no_stars_in_bins[2]))
+y3 = np.random.normal(mu, sigma, int(no_stars_in_bins[2]))
+z3 = np.random.normal(mu, sigma, int(no_stars_in_bins[2]))
+
+x4 = np.random.normal(mu, sigma, int(no_stars_in_bins[3]))
+y4 = np.random.normal(mu, sigma, int(no_stars_in_bins[3]))
+z4 = np.random.normal(mu, sigma, int(no_stars_in_bins[3]))
+
+x5 = np.random.normal(mu, sigma, int(no_stars_in_bins[4]))
+y5 = np.random.normal(mu, sigma, int(no_stars_in_bins[4]))
+z5 = np.random.normal(mu, sigma, int(no_stars_in_bins[4]))
+
+x6 = np.random.normal(mu, sigma, int(no_stars_in_bins[5]))
+y6 = np.random.normal(mu, sigma, int(no_stars_in_bins[5]))
+z6 = np.random.normal(mu, sigma, int(no_stars_in_bins[5]))
+
+x7 = np.random.normal(mu, sigma, int(no_stars_in_bins[6]))
+y7 = np.random.normal(mu, sigma, int(no_stars_in_bins[6]))
+z7 = np.random.normal(mu, sigma, int(no_stars_in_bins[6]))
+
+x8 = np.random.normal(mu, sigma, int(no_stars_in_bins[7]))
+y8 = np.random.normal(mu, sigma, int(no_stars_in_bins[7]))
+z8 = np.random.normal(mu, sigma, int(no_stars_in_bins[7]))
+
+x9 = np.random.normal(mu, sigma, int(no_stars_in_bins[8]))
+y9 = np.random.normal(mu, sigma, int(no_stars_in_bins[8]))
+z9 = np.random.normal(mu, sigma, int(no_stars_in_bins[8]))
+
+x10 = np.random.normal(mu, sigma, int(no_stars_in_bins[9]))
+y10 = np.random.normal(mu, sigma, int(no_stars_in_bins[9]))
+z10 = np.random.normal(mu, sigma, int(no_stars_in_bins[9]))
+
+x11 = np.random.normal(mu, sigma, int(no_stars_in_bins[10]))
+y11 = np.random.normal(mu, sigma, int(no_stars_in_bins[10]))
+z11 = np.random.normal(mu, sigma, int(no_stars_in_bins[10]))
+
+x12 = np.random.normal(mu, sigma, int(no_stars_in_bins[11]))
+y12 = np.random.normal(mu, sigma, int(no_stars_in_bins[11]))
+z12 = np.random.normal(mu, sigma, int(no_stars_in_bins[11]))
+
+x13 = np.random.normal(mu, sigma, int(no_stars_in_bins[12]))
+y13 = np.random.normal(mu, sigma, int(no_stars_in_bins[12]))
+z13 = np.random.normal(mu, sigma, int(no_stars_in_bins[12]))
+
+x14 = np.random.normal(mu, sigma, int(no_stars_in_bins[13]))
+y14 = np.random.normal(mu, sigma, int(no_stars_in_bins[13]))
+z14 = np.random.normal(mu, sigma, int(no_stars_in_bins[13]))
+
+x15 = np.random.normal(mu, sigma, int(no_stars_in_bins[14]))
+y15 = np.random.normal(mu, sigma, int(no_stars_in_bins[14]))
+z15 = np.random.normal(mu, sigma, int(no_stars_in_bins[14]))
+
+x16 = np.random.normal(mu, sigma, int(no_stars_in_bins[15]))
+y16 = np.random.normal(mu, sigma, int(no_stars_in_bins[15]))
+z16 = np.random.normal(mu, sigma, int(no_stars_in_bins[15]))
+
+x17 = np.random.normal(mu, sigma, int(no_stars_in_bins[16]))
+y17 = np.random.normal(mu, sigma, int(no_stars_in_bins[16]))
+z17 = np.random.normal(mu, sigma, int(no_stars_in_bins[16]))
+
+x18 = np.random.normal(mu, sigma, int(no_stars_in_bins[17]))
+y18 = np.random.normal(mu, sigma, int(no_stars_in_bins[17]))
+z18 = np.random.normal(mu, sigma, int(no_stars_in_bins[17]))
+
+x19 = np.random.normal(mu, sigma, int(no_stars_in_bins[18]))
+y19 = np.random.normal(mu, sigma, int(no_stars_in_bins[18]))
+z19 = np.random.normal(mu, sigma, int(no_stars_in_bins[18]))
+
+x20 = np.random.normal(mu, sigma, int(no_stars_in_bins[19]))
+y20 = np.random.normal(mu, sigma, int(no_stars_in_bins[19]))
+z20 = np.random.normal(mu, sigma, int(no_stars_in_bins[19]))
+
+x21 = np.random.normal(mu, sigma, int(no_stars_in_bins[20]))
+y21 = np.random.normal(mu, sigma, int(no_stars_in_bins[20]))
+z21 = np.random.normal(mu, sigma, int(no_stars_in_bins[20]))
+
+
+fig = plt.figure()
+ax = Axes3D(fig,  axisbg='black')
+ax.set_axis_off()
+#for i in range(0,datasize):
+    
+    
+    
+def init():
+    for i in range(0,datasize):  
+        plot(x1,y1,z1,'o', markersize=ss0_8[i], color=cc0_88[i])
+        plot(x2,y2,z2,'o', markersize=ss0_9[i], color=cc0_99[i])
+        plot(x3,y3,z3,'o', markersize=ss1[i], color=cc11[i])
+        plot(x4,y4,z4,'o', markersize=ss1_25[i], color=cc1_255[i])
+        plot(x5,y5,z5,'o', markersize=ss1_5[i], color=cc1_55[i])
+        plot(x6,y6,z6,'o', markersize=ss1_7[i], color=cc1_77[i])
+        plot(x7,y7,z7,'o', markersize=ss2[i], color=cc22[i])
+        plot(x8,y8,z8,'o', markersize=ss2_5[i], color=cc2_55[i])
+        plot(x9,y9,z9,'o', markersize=ss3[i], color=cc33[i])
+        plot(x10,y10,z10,'o', markersize=ss4[i], color=cc44[i])
+        plot(x11,y11,z11,'o', markersize=ss5[i], color=cc55[i])
+        plot(x12,y12,z12,'o', markersize=ss7[i], color=cc77[i])
+        plot(x13,y13,z13,'o', markersize=ss9[i], color=cc99[i])
+        plot(x14,y14,z14,'o', markersize=ss12[i], color=cc122[i])
+        plot(x15,y15,z15,'o', markersize=ss15[i], color=cc155[i])
+        plot(x16,y16,z16,'o', markersize=ss20[i], color=cc200[i])
+        plot(x17,y17,z17,'o', markersize=ss25[i], color=cc255[i])
+        plot(x18, y18,z18,'o', markersize=ss40[i], color=cc400[i])
+        plot(x19, y19,z19,'o', markersize=ss60[i], color=cc600[i])
+        plot(x20, y20,z20,'o', markersize=ss85[i], color=cc855[i])
+        plot(x21, y21,z21,'o', markersize=ss120[i], color=cc1200[i])
+    return fig,
+
+
+    #for angle in range(0, 360):
+def animate(angle):
+        
+    ax.view_init(30, angle)
+    return fig,
+        #plt.draw()
+        #pause(0.0000000000000000000000000000001)
+frame=size(datasize)     
+anim = animation.FuncAnimation(fig, animate, init_func=init, frames=frame, interval=50, blit=False)
+anim.save('3Dplot.mp4', fps=70, extra_args=['-vcodec', 'libx264'])     
+    #pause(0.0000000000000000000000000000001)  
+    #show()
+    
+
+    
