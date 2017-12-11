@@ -1,0 +1,90 @@
+
+%pylab
+
+#define the imf:
+
+def IMF(M):
+	return 0.060 * M**(-2.35)
+
+# the limits of the masses
+M_min = 0.8
+M_max = 120.
+
+N_pts = 1000000
+
+h = 0.2
+u1 = np.random.uniform(low = M_min, high = M_max, size = (N_pts, ))
+u2 = np.random.uniform(low = 0., high = 1., size = (N_pts, ))
+
+# condition to accept the points: when the y-values are below the curve
+idx = np.where(u2 <= IMF(u1)/h)[0]   # acception criteria 
+v = u1[idx]
+
+#print(v)
+sizev = size(v)
+print('size of the imf distribution', sizev)
+
+# v should serve as the size in our 3d cluster plot...
+
+vmmin = (max(v))
+vmmax = (min(v))
+
+print('min mass for v:', vmmin)
+print('max mass for v:', vmmax)
+
+
+master_data = loadtxt('master_data_5.dat')
+
+age = master_data[:,0]
+sizerows = size(age)
+sizecolumns = size(master_data[0,:])
+sizecolumns_2 = int((sizecolumns-1)/2)
+print('sizecolumns_2:', sizecolumns_2)
+
+
+# next we will make matrixes that contain the color and luminosity of all the stars through
+# all the time
+
+color = zeros((sizerows, sizecolumns_2))
+lumin = zeros((sizerows, sizecolumns_2))
+
+for i in range(0, sizecolumns_2-2, 1):
+    color[:,i] = master_data[:,(i*2)+1]
+    lumin[:,i] = master_data[:,(i*2)+2]
+
+print('columns size:', sizecolumns)
+print('color size:', size(color[:,0]))
+print('lumin size:', size(lumin[:,0]))
+
+
+# we define the radius that is
+# R ~ sqrt(L/T^4)
+
+radus = real(sqrt(abs(lumin/color**4)))
+
+# Msun_ini : 120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3,
+# 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80 
+# the number of masses is: 21
+nbins = 21
+
+print('this is the imf:', v)
+hist(v, bins=nbins, normed = 'True')
+
+#the mass bins are:
+mbins = array([120, 85, 60, 40, 25, 20, 15, 12, 9, 7, 5, 4, 3, 2.5, 2, 1.7, 1.5, 1.25, 1, 0.90, 0.80]) 
+print('the mass bins are:', mbins)
+
+no_stars_in_bins = zeros(nbins)
+
+# we count the numbers of stars in each bin
+for i in range(0,nbins-1):
+	for j in range(0,size(v)):
+		if (v[j] < mbins[i] and v[j] >= mbins[i+1]):
+			no_stars_in_bins[i] += 1
+
+print('the no_stars_in_bins are:', no_stars_in_bins)
+
+
+
+
+
