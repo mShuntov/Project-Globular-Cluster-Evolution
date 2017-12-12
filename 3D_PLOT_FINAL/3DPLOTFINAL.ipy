@@ -17,7 +17,7 @@ print('sizecolumns_2:', sizecolumns_2)
 
 # we run the imf distribution code to get the imf distribution that is the number of stars with
 # certain mass that will be used as the size
-%run imf_distr.ipy
+%run imf_distr_FINAL.ipy
 
 
 # We reset the main parameters of the plot
