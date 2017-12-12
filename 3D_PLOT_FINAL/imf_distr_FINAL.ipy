@@ -1,0 +1,179 @@
+%pylab
+
+#define the imf:
+
+def IMF(M):
+	return 0.060 * M**(-2.35)
+
+# the limits of the masses
+M_min = 0.8
+M_max = 120.
+
+N_pts = 1000000
+
+h = 0.2
+u1 = np.random.uniform(low = M_min, high = M_max, size = (N_pts, ))
+u2 = np.random.uniform(low = 0., high = 1., size = (N_pts, ))
+
+# condition to accept the points: when the y-values are below the curve
+idx = np.where(u2 <= IMF(u1)/h)[0]   # acception criteria 
+v = u1[idx]
+
+#print(v)
+sizev = size(v)
+print('size of the imf distribution', sizev)
+
+# v should serve as the size in our 3d cluster plot...
+
+vmmin = (max(v))
+vmmax = (min(v))
+
+print('min mass for v:', vmmin)
+print('max mass for v:', vmmax)
+
+
+master_data = loadtxt('master_data_4.dat')
+
+age = master_data[:,0]
+sizerows = size(age)
+sizecolumns = size(master_data[0,:])
+sizecolumns_2 = int((sizecolumns-1)/2)
+print('sizecolumns_2:', sizecolumns_2)
+
+
+# next we will make matrixes that contain the color and luminosity of all the stars through
+# all the time
+
+color = zeros((sizerows, sizecolumns_2))
+lumin = zeros((sizerows, sizecolumns_2))
+
+for i in range(0, sizecolumns_2-2, 1):
+    color[:,i] = master_data[:,(i*2)+1]
+    lumin[:,i] = master_data[:,(i*2)+2]
+
+print('columns size:', sizecolumns)
+print('color size:', size(color[:,0]))
+print('lumin size:', size(lumin[:,0]))
+
+
+# we define the radus that is
+# R ~ sqrt(L/T^4)
+radus = real(sqrt(abs(lumin/color**4)))
+
+nbins = 21
+
+#print('this is the imf:', v)
+#hist(v, bins=nbins, normed = 'True')
+
+#the mass bins are:
+mbins = array([	0.80, 0.90, 1, 1.25, 1.5, 1.7, 2, 2.5, 3, 4, 5, 7, 9, 12, 15, 20, 25, 40, 60, 85, 120]) 
+print('the mass bins are:', mbins)
+
+no_stars_in_bins = zeros(nbins-1)
+
+# we count the numbers of stars in each bin
+for i in range(0,nbins-1):
+	for j in range(0,size(v)):
+		if (v[j] >= mbins[i] and v[j] < mbins[i+1]):
+			no_stars_in_bins[i] += 1
+
+print('the no_stars_in_bins are:', no_stars_in_bins)
+
+totno_stars = sizev
+color_data = zeros((sizerows, totno_stars))
+size_data = zeros((sizerows, totno_stars))
+
+#for i in range(0, totno_stars):
+
+#for j in range(0, nbins-1):
+#	for i in range(1, int(no_stars_in_bins[j])):
+#		color_data[:,(i-1)+int(no_stars_in_bins[j-1])] = color[:,0]
+
+import pdb; 
+
+for i in range(0, int(no_stars_in_bins[0])):
+	color_data[:,i] = color[:,0]
+#	print(color_data[:,])
+#	pdb.set_trace()
+	size_data[:,i] = radus[:,0]
+for i in range(int(no_stars_in_bins[0]), (int(no_stars_in_bins[0])+int(no_stars_in_bins[1]))):
+	color_data[:,i] = color[:,1]
+	size_data[:,i] = radus[:,1]
+for i in range(int(sum(no_stars_in_bins[:2])), (int(sum(no_stars_in_bins[:2]))+int(no_stars_in_bins[2]))):
+	color_data[:,i] = color[:,2]
+	size_data[:,i] = radus[:,2]
+#	pdb.set_trace()
+for i in range(int(sum(no_stars_in_bins[:3])), (int(sum(no_stars_in_bins[:3]))+int(no_stars_in_bins[3]))):
+	color_data[:,i] = color[:,3]
+	size_data[:,i] = radus[:,3]
+for i in range(int(sum(no_stars_in_bins[:4])), (int(sum(no_stars_in_bins[:4]))+int(no_stars_in_bins[4]))):
+	color_data[:,i] = color[:,4]
+	size_data[:,i] = radus[:,4]
+for i in range(int(sum(no_stars_in_bins[:5])), (int(sum(no_stars_in_bins[:5]))+int(no_stars_in_bins[5]))):
+	color_data[:,i] = color[:,5]
+	size_data[:,i] = radus[:,5]
+for i in range(int(sum(no_stars_in_bins[:6])), (int(sum(no_stars_in_bins[:6]))+int(no_stars_in_bins[6]))):
+	color_data[:,i] = color[:,6]
+	size_data[:,i] = radus[:,6]
+#	pdb.set_trace()
+for i in range(int(sum(no_stars_in_bins[:7])), (int(sum(no_stars_in_bins[:7]))+int(no_stars_in_bins[7]))):
+	color_data[:,i] = color[:,7]
+	size_data[:,i] = radus[:,7]
+for i in range(int(sum(no_stars_in_bins[:8])), (int(sum(no_stars_in_bins[:8]))+int(no_stars_in_bins[8]))):
+	color_data[:,i] = color[:,8]
+	size_data[:,i] = radus[:,8]
+for i in range(int(sum(no_stars_in_bins[:9])), (int(sum(no_stars_in_bins[:9]))+int(no_stars_in_bins[9]))):
+	color_data[:,i] = color[:,9]
+	size_data[:,i] = radus[:,9]
+for i in range(int(sum(no_stars_in_bins[:10])), (int(sum(no_stars_in_bins[:10]))+int(no_stars_in_bins[10]))):
+	color_data[:,i] = color[:,10]
+	size_data[:,i] = radus[:,10]
+for i in range(int(sum(no_stars_in_bins[:11])), (int(sum(no_stars_in_bins[:11]))+int(no_stars_in_bins[11]))):
+	color_data[:,i] = color[:,11]
+	size_data[:,i] = radus[:,11]
+for i in range(int(sum(no_stars_in_bins[:12])), (int(sum(no_stars_in_bins[:12]))+int(no_stars_in_bins[12]))):
+	color_data[:,i] = color[:,12]
+	size_data[:,i] = radus[:,12]
+for i in range(int(sum(no_stars_in_bins[:13])), (int(sum(no_stars_in_bins[:13]))+int(no_stars_in_bins[13]))):
+	color_data[:,i] = color[:,13]
+	size_data[:,i] = radus[:,13]
+for i in range(int(sum(no_stars_in_bins[:14])), (int(sum(no_stars_in_bins[:14]))+int(no_stars_in_bins[14]))):
+	color_data[:,i] = color[:,14]
+	size_data[:,i] = radus[:,14]
+for i in range(int(sum(no_stars_in_bins[:15])), (int(sum(no_stars_in_bins[:15]))+int(no_stars_in_bins[15]))):
+	color_data[:,i] = color[:,15]
+	size_data[:,i] = radus[:,15]
+for i in range(int(sum(no_stars_in_bins[:16])), (int(sum(no_stars_in_bins[:16]))+int(no_stars_in_bins[16]))):
+	color_data[:,i] = color[:,16]
+	size_data[:,i] = radus[:,16]
+for i in range(int(sum(no_stars_in_bins[:17])), (int(sum(no_stars_in_bins[:17]))+int(no_stars_in_bins[17]))):
+	color_data[:,i] = color[:,17]
+	size_data[:,i] = radus[:,17]
+for i in range(int(sum(no_stars_in_bins[:18])), (int(sum(no_stars_in_bins[:18]))+int(no_stars_in_bins[18]))):
+	color_data[:,i] = color[:,18]
+	size_data[:,i] = radus[:,18]
+for i in range(int(sum(no_stars_in_bins[:19])), (int(sum(no_stars_in_bins[:19]))+int(no_stars_in_bins[19]))):
+	color_data[:,i] = color[:,19]
+	size_data[:,i] = radus[:,19]
+#for i in range(int(no_stars_in_bins[19]), int(no_stars_in_bins[20])):
+#	color_data[:,i] = color[:,20]
+#for i in range(int(no_stars_in_bins[20]), int(no_stars_in_bins[21])):
+#	color_data[:,i] = color[:,21]
+
+'''
+print('color_data', color_data)
+print('size_data', size_data)
+print('color test')
+print('color[0]',color[:,0])
+print('color data 0', color_data[:1,0:int(no_stars_in_bins[0])])
+print('color data 15-16', color_data[:1,int(no_stars_in_bins[15]):(int(no_stars_in_bins[15])+int(no_stars_in_bins[16]))])
+#print(size(color_data[:1,int(no_stars_in_bins[0]):int(no_stars_in_bins[1])]))
+print(size(color_data[:1,int(no_stars_in_bins[15]):(int(no_stars_in_bins[15])+int(no_stars_in_bins[16]))]))
+print('int(no_stars_in_bins[0])',int(no_stars_in_bins[0]))
+print('int(no_stars_in_bins[1])', int(no_stars_in_bins[1]))
+print('int(sum(no_stars_in_bins[:1]))', int(sum(no_stars_in_bins[:1])))
+
+numpy.set_printoptions(threshold=numpy.nan)
+print('color_data',color_data[0,:])
+'''
+
